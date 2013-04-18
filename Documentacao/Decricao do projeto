@@ -14,3 +14,4 @@ Resumo do fluxo básico do sistema:
 Ao entrar no sistema o usuário pode navegar pelo site e escolher o produto desejado clicando no botão "COMPRAR". o usuário é redirecionado para o carrinho de compras aonde tem a lista de todos os produtos comprados. O usuário clica no botão "FINALIZAR COMPRA" e o sistema vai soliciar o login desse usuário, que depois será redirecionado para a página de escolha do tipo de pagamento. Em seguida a compra é finalizada e o cliente recebe um email informando que a compra foi realizada.
 
 Grupo: Vitor Eduardo e Francisco Antônio
+
