@@ -10,11 +10,12 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import model.Conexao;
 import model.Produto;
 
-public class DaoCaracteristicasProduto {
+public class DaoCaracteristicasProduto extends Dao{
 	private Conexao conexao;
 	private Statement smtm;
 	
 	public DaoCaracteristicasProduto(Conexao conexao) {
+		super(conexao);
 		try {
 			this.conexao = conexao;
 			this.smtm = this.conexao.getConexao().createStatement();
@@ -28,11 +29,11 @@ public class DaoCaracteristicasProduto {
 		    String valorHash = caracteristicas.get(chaveHash);
 		    
 		    String sql = "INSERT INTO CaracteristicasProduto "+
-               	 		"(produtos_id, chave, valor) "+
-               	 		"VALUES ("+	                 
-               	 	    idProduto+","+
-               	 		chaveHash+","+                	 
-               	 		valorHash+")";
+               	 		 "(produtos_id, chave, valor) "+
+               	 		 "VALUES ("+	                 
+               	 	     idProduto+","+
+               	 		 aspasSimples(chaveHash)+","+                	 
+               	 		 aspasSimples(valorHash)+")";
 		    smtm.executeUpdate(sql);
 	    }
 	}

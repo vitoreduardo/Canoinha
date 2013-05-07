@@ -2,3 +2,14 @@ CREATE DATABASE "CanoinnhaDB"
   WITH ENCODING='UTF8'
        CONNECTION LIMIT=-1;
 
+
+CREATE TABLE "Teste"
+(
+   "Id" integer[] NOT NULL, 
+   CONSTRAINT pk_teste PRIMARY KEY ("Id")
+) 
+WITH (
+  OIDS = FALSE
+)
+;
+

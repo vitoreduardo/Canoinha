@@ -10,12 +10,13 @@ import java.util.List;
 import model.Conexao;
 import model.Produto;
 
-public class DaoProduto {
+public class DaoProduto extends Dao {
 	private Conexao conexao;
 	private Statement smtm;
 	private DaoCaracteristicasProduto daoCaracteristicasProduto; 
 	
-	public DaoProduto(Conexao conexao) {		
+	public DaoProduto(Conexao conexao) {
+		super(conexao);
 		try {
 			this.conexao = conexao;
 			this.smtm = this.conexao.getConexao().createStatement();
@@ -26,49 +27,78 @@ public class DaoProduto {
 	}	
 	
 	public void inserir(Produto produto) throws SQLException{
+		produto.setId(gerarSequencia("produtos_id_seq"));
+		
 		String sql = "INSERT INTO Produtos "+
-	                 "(nome, precoDeCompra, precoDeVenda, valorDesconto, "+
-	                 "informacoes, quantidadeDisponivel) "+
-	                 "VALUES ("+	                 
-	                 produto.getNome()+","+
+	                 "(id, nome, precoDeCompra, precoDeVenda, valorDesconto, "+
+	                 "informacoes, quantidadeDisponivel, foto) "+
+	                 "VALUES ("+
+	                 produto.getId()+","+
+	                 aspasSimples(produto.getNome())+","+
 	                 produto.getPrecoDeCompra()+","+
 	                 produto.getPrecoDeVenda()+","+
 	                 produto.getValorDesconto()+","+
-	                 produto.getInformacoes()+","+
-	                 produto.getQuantidadeDisponivel()+")RETURNING id";
+	                 aspasSimples(produto.getInformacoes())+","+
+	                 produto.getQuantidadeDisponivel()+","+
+	                 aspasSimples(produto.getFotos())+")" ;
 		
-		ResultSet rs = smtm.executeQuery(sql);
+		smtm.executeUpdate(sql);
 		
-		this.daoCaracteristicasProduto.inserir(rs.getInt("id"),produto.getCaracteristicas());
+		if(produto.getCaracteristicas().size() > 0){
+			this.daoCaracteristicasProduto.inserir(produto.getId(),produto.getCaracteristicas());
+		}
 	}
 	
 	public void atualizar(Produto produto) throws SQLException{
 		String sql = "UPDATE Produtos SET "+
-	                 "nome="+produto.getNome()+
-	                 "precoDeCompra="+produto.getPrecoDeCompra()+
-	                 "precoDeVenda="+produto.getPrecoDeVenda()+
-	                 "valorDesconto="+produto.getValorDesconto()+
-	                 "informacoes="+produto.getInformacoes()+
+	                 "nome="+aspasSimples(produto.getNome())+", "+
+	                 "precoDeCompra="+produto.getPrecoDeCompra()+", "+
+	                 "precoDeVenda="+produto.getPrecoDeVenda()+", "+
+	                 "valorDesconto="+produto.getValorDesconto()+", "+
+	                 "informacoes="+aspasSimples(produto.getInformacoes())+", "+
+	                 "foto="+aspasSimples(produto.getFotos())+", "+
 	                 "quantidadeDisponivel="+produto.getQuantidadeDisponivel()+" "+
 	                 "WHERE id="+produto.getId();								
 		
-		ResultSet rs = smtm.executeQuery(sql);
+		smtm.executeUpdate(sql);
 		
 		this.daoCaracteristicasProduto.excluir(produto.getId());
-		this.daoCaracteristicasProduto.inserir(rs.getInt("id"),produto.getCaracteristicas());
+		this.daoCaracteristicasProduto.inserir(produto.getId(),produto.getCaracteristicas());
 	}
 	
 	public void excluir(int id) throws SQLException{
+		this.daoCaracteristicasProduto.excluir(id);
 		String sql = "DELETE FROM Produtos "+ 
 	                 "WHERE id="+id;										
-		smtm.executeUpdate(sql);		
-		
-		this.daoCaracteristicasProduto.excluir(id);
+		smtm.executeUpdate(sql);				
 	}
 	
-	public List<Produto> buscar(int id) throws SQLException{
+	public Produto buscar(int id) throws SQLException{
 		String sql = "Select * FROM Produtos "+ 
 	                 "WHERE id="+id;										
+		ResultSet rsProdutos = smtm.executeQuery(sql);
+		Produto produto = new Produto();
+		
+		if(rsProdutos != null){
+			while(rsProdutos.next()){				
+				produto.setId(rsProdutos.getInt("id"));
+				produto.setNome(rsProdutos.getString("nome"));
+				produto.setPrecoDeCompra(rsProdutos.getDouble("precoDeCompra"));
+				produto.setPrecoDeVenda(rsProdutos.getDouble("precodeVenda"));
+				produto.setValorDesconto(rsProdutos.getDouble("valorDesconto"));
+				produto.setInformacoes(rsProdutos.getString("informacoes"));
+				produto.setQuantidadeDisponivel(rsProdutos.getInt("quantidadeDisponivel"));
+				produto.setFotos(rsProdutos.getString("foto"));				
+				produto.setCaracteristicas(this.daoCaracteristicasProduto.buscar(produto.getId()));				
+			}
+			rsProdutos.close();
+		}
+		return produto;
+	}
+	
+	public List<Produto> buscar() throws SQLException{
+		String sql = "Select * FROM Produtos ";
+		
 		ResultSet rsProdutos = smtm.executeQuery(sql);
 		
 		List<Produto> produtos = new ArrayList<Produto>();
@@ -90,5 +120,5 @@ public class DaoProduto {
 			rsProdutos.close();
 		}
 		return produtos;
-	}		
+	}
 }

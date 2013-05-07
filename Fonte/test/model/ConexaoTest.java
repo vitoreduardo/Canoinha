@@ -29,7 +29,7 @@ public class ConexaoTest {
 	@Test
 	public void testGetConexaoDeveRetornarUmObjetoDeConexaoComOBancoDeDados() {
 		try {
-			Conexao conexao = new Conexao();
+			Conexao conexao = new Conexao("jdbc:postgresql://localhost:5432/CanoinhaTestDB");
 			Connection connection = conexao.getConexao(); 
 			Assert.assertNotNull(conexao);
 		} catch (SQLException e) {			
