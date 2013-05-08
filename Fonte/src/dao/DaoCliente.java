@@ -15,9 +15,10 @@ public class DaoCliente extends Dao{
 	private Conexao conexao;
 	private Statement smtm;
 	
-	public DaoCliente(Conexao conexao) {
+	public DaoCliente(Conexao conexao) throws SQLException {
 		super(conexao);
 		this.conexao = conexao;
+		this.smtm = this.conexao.getConexao().createStatement();
 	}
 	
 	public void inserir(Cliente cliente) throws SQLException{

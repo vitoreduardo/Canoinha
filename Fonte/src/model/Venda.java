@@ -10,16 +10,16 @@ public class Venda {
 	private double valorFrete;
 	private String tipoPagamento;
 	private int quantidadeParcelas;
-	private List<ItensVendas> itensVendas;
+	private List<ItemVenda> itensVendas;
 	
-	public void addItensVendas(ItensVendas itemVenda){
+	public void addItensVendas(ItemVenda itemVenda){
 		this.itensVendas.add(itemVenda);
 	}
 
-	public List<ItensVendas> getItensVendas() {
+	public List<ItemVenda> getItensVendas() {
 		return itensVendas;
 	}
-	public void setItensVendas(List<ItensVendas> itensVendas) {
+	public void setItensVendas(List<ItemVenda> itensVendas) {
 		this.itensVendas = itensVendas;
 	}
 	public int getId() {
