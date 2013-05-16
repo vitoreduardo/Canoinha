@@ -14,6 +14,7 @@ public class DaoProduto extends Dao {
 	private Conexao conexao;
 	private Statement smtm;
 	private DaoCaracteristicasProduto daoCaracteristicasProduto; 
+	private DaoCategoria daoCategoria;
 	
 	public DaoProduto(Conexao conexao) {
 		super(conexao);
@@ -21,6 +22,7 @@ public class DaoProduto extends Dao {
 			this.conexao = conexao;
 			this.smtm = this.conexao.getConexao().createStatement();
 			this.daoCaracteristicasProduto = new DaoCaracteristicasProduto(this.conexao);
+			this.daoCategoria = new DaoCategoria(this.conexao);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -31,7 +33,7 @@ public class DaoProduto extends Dao {
 		
 		String sql = "INSERT INTO Produtos "+
 	                 "(id, nome, precoDeCompra, precoDeVenda, valorDesconto, "+
-	                 "informacoes, quantidadeDisponivel, foto) "+
+	                 "informacoes, quantidadeDisponivel, foto, categorias_id) "+
 	                 "VALUES ("+
 	                 produto.getId()+","+
 	                 aspasSimples(produto.getNome())+","+
@@ -40,7 +42,8 @@ public class DaoProduto extends Dao {
 	                 produto.getValorDesconto()+","+
 	                 aspasSimples(produto.getInformacoes())+","+
 	                 produto.getQuantidadeDisponivel()+","+
-	                 aspasSimples(produto.getFotos())+")" ;
+	                 aspasSimples(produto.getFotos())+","+
+	                 produto.getCategoria().getId()+")" ;
 		
 		smtm.executeUpdate(sql);
 		
@@ -58,6 +61,7 @@ public class DaoProduto extends Dao {
 	                 "informacoes="+aspasSimples(produto.getInformacoes())+", "+
 	                 "foto="+aspasSimples(produto.getFotos())+", "+
 	                 "quantidadeDisponivel="+produto.getQuantidadeDisponivel()+" "+
+	                 "categorias_id="+produto.getCategoria().getId()+" "+
 	                 "WHERE id="+produto.getId();								
 		
 		smtm.executeUpdate(sql);
@@ -90,6 +94,7 @@ public class DaoProduto extends Dao {
 				produto.setQuantidadeDisponivel(rsProdutos.getInt("quantidadeDisponivel"));
 				produto.setFotos(rsProdutos.getString("foto"));				
 				produto.setCaracteristicas(this.daoCaracteristicasProduto.buscar(produto.getId()));				
+				produto.setCategoria(this.daoCategoria.buscar(produto.getCategoria().getId()));
 			}
 			rsProdutos.close();
 		}
@@ -114,7 +119,7 @@ public class DaoProduto extends Dao {
 				produto.setQuantidadeDisponivel(rsProdutos.getInt("quantidadeDisponivel"));
 				produto.setFotos(rsProdutos.getString("foto"));				
 				produto.setCaracteristicas(this.daoCaracteristicasProduto.buscar(produto.getId()));
-				
+				produto.setCategoria(this.daoCategoria.buscar(produto.getCategoria().getId()));
 				produtos.add(produto);
 			}
 			rsProdutos.close();

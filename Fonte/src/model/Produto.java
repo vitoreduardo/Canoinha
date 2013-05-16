@@ -14,7 +14,16 @@ public class Produto {
 	private String informacoes;
 	private HashMap<String, String> caracteristicas;
 	private int quantidadeDisponivel;
+	private Categoria categoria;
 	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
 	public Produto() {
 		this.caracteristicas = new HashMap<String, String>();
 	}

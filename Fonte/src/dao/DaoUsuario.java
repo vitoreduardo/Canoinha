@@ -59,7 +59,7 @@ public class DaoUsuario extends Dao{
                      "numero="+aspasSimples(usuario.getEndereco().getNumero())+", " +
                      "cep="+aspasSimples(usuario.getEndereco().getCep())+", " +
                      "cidade="+aspasSimples(usuario.getEndereco().getCidade())+", " +
-                     "uf="+aspasSimples(usuario.getEndereco().getUf())+" " +
+                     "uf="+aspasSimples(usuario.getEndereco().getUf())+", " +
                      "tipo="+aspasSimples(usuario.getTipo().toString())+" " +
 	                 "WHERE id="+usuario.getId();								
 		

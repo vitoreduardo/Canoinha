@@ -1,5 +1,12 @@
+CREATE TABLE Categorias (
+  Id SERIAL NOT NULL,
+  Nome VARCHAR(255) NOT NULL,
+  PRIMARY KEY(Id)
+);
+
 CREATE TABLE Produtos (
   Id SERIAL NOT NULL,
+  Categorias_Id SERIAL NOT NULL,
   Nome VARCHAR(255) NOT NULL,
   PrecoDeCompra FLOAT NOT NULL,
   PrecoDeVenda FLOAT NOT NULL,
@@ -7,20 +14,9 @@ CREATE TABLE Produtos (
   Informacoes TEXT NOT NULL,
   QuantidadeDisponivel INTEGER NOT NULL,
   Foto VARCHAR(255) NOT NULL,
-  PRIMARY KEY(Id)
-);
-
-CREATE TABLE Vendas (
-  Id SERIAL NOT NULL,
-  Usuarios_Id INT NOT NUll,
-  Valor FLOAT NOT NULL,
-  DataHora DATE NOT NULL,
-  ValorFrete FLOAT NOT NULL,
-  TipoPagamento VARCHAR(50) NOT NULL,
-  QuantidadeParcelas INTEGER NOT NULL,
   PRIMARY KEY(Id),
-  FOREIGN KEY(Usuarios_Id)
-    REFERENCES Usuarios(Id)
+  FOREIGN KEY(Categorias_Id)
+    REFERENCES Categorias(Id)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 );
@@ -40,6 +36,22 @@ CREATE TABLE Usuarios (
   Uf VARCHAR(2) NOT NULL,
   Tipo VarChar(13),
   PRIMARY KEY(Id)
+);
+
+
+CREATE TABLE Vendas (
+  Id SERIAL NOT NULL,
+  Usuarios_Id INT NOT NUll,
+  Valor FLOAT NOT NULL,
+  DataHora DATE NOT NULL,
+  ValorFrete FLOAT NOT NULL,
+  TipoPagamento VARCHAR(50) NOT NULL,
+  QuantidadeParcelas INTEGER NOT NULL,
+  PRIMARY KEY(Id),
+  FOREIGN KEY(Usuarios_Id)
+    REFERENCES Usuarios(Id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
 );
 
 CREATE TABLE CaracteristicasProduto (
