@@ -10,17 +10,7 @@ CREATE TABLE Produtos (
   PRIMARY KEY(Id)
 );
 
-CREATE TABLE Vendas (
-  Id SERIAL NOT NULL,
-  Valor FLOAT NOT NULL,
-  DataHora DATE NOT NULL,
-  ValorFrete FLOAT NOT NULL,
-  TipoPagamento VARCHAR(50) NOT NULL,
-  QuantidadeParcelas INTEGER NOT NULL,
-  PRIMARY KEY(Id)
-);
-
-CREATE TABLE Clientes (
+CREATE TABLE Usuarios (
   Id SERIAL NOT NULL,
   Nome VARCHAR(100) NOT NULL,
   Cpf VARCHAR(11) NOT NULL,
@@ -33,7 +23,24 @@ CREATE TABLE Clientes (
   Cep VARCHAR(9) NOT NULL,
   Cidade VARCHAR(50) NOT NULL,
   Uf VARCHAR(2) NOT NULL,
+  Tipo VarChar(13),
   PRIMARY KEY(Id)
+);
+
+
+CREATE TABLE Vendas (
+  Id SERIAL NOT NULL,
+  Usuarios_Id INT NOT NUll,
+  Valor FLOAT NOT NULL,
+  DataHora DATE NOT NULL,
+  ValorFrete FLOAT NOT NULL,
+  TipoPagamento VARCHAR(50) NOT NULL,
+  QuantidadeParcelas INTEGER NOT NULL,
+  PRIMARY KEY(Id),
+  FOREIGN KEY(Usuarios_Id)
+    REFERENCES Usuarios(Id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
 );
 
 CREATE TABLE CaracteristicasProduto (
@@ -50,7 +57,7 @@ CREATE TABLE CaracteristicasProduto (
 
 CREATE TABLE Avaliacoes (
   Id SERIAL NOT NULL,
-  Clientes_Id INT NOT NULL,
+  usuarios_Id INT NOT NULL,
   Produtos_Id INT NOT NULL,
   Texto TEXT NOT NULL,
   PRIMARY KEY(Id),
@@ -58,8 +65,8 @@ CREATE TABLE Avaliacoes (
     REFERENCES Produtos(Id)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION,
-  FOREIGN KEY(Clientes_Id)
-    REFERENCES Clientes(Id)
+  FOREIGN KEY(Usuarios_Id)
+    REFERENCES Usuarios(Id)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 );

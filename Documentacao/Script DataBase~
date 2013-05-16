@@ -1,15 +1,89 @@
-CREATE DATABASE "CanoinnhaDB"
-  WITH ENCODING='UTF8'
-       CONNECTION LIMIT=-1;
+CREATE TABLE Produtos (
+  Id SERIAL NOT NULL,
+  Nome VARCHAR(255) NOT NULL,
+  PrecoDeCompra FLOAT NOT NULL,
+  PrecoDeVenda FLOAT NOT NULL,
+  ValorDesconto FLOAT NOT NULL,
+  Informacoes TEXT NOT NULL,
+  QuantidadeDisponivel INTEGER NOT NULL,
+  Foto VARCHAR(255) NOT NULL,
+  PRIMARY KEY(Id)
+);
 
+CREATE TABLE Vendas (
+  Id SERIAL NOT NULL,
+  Usuarios_Id INT NOT NUll,
+  Valor FLOAT NOT NULL,
+  DataHora DATE NOT NULL,
+  ValorFrete FLOAT NOT NULL,
+  TipoPagamento VARCHAR(50) NOT NULL,
+  QuantidadeParcelas INTEGER NOT NULL,
+  PRIMARY KEY(Id),
+  FOREIGN KEY(Usuarios_Id)
+    REFERENCES Usuarios(Id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
 
-CREATE TABLE "Teste"
-(
-   "Id" integer[] NOT NULL, 
-   CONSTRAINT pk_teste PRIMARY KEY ("Id")
-) 
-WITH (
-  OIDS = FALSE
-)
-;
+CREATE TABLE Usuarios (
+  Id SERIAL NOT NULL,
+  Nome VARCHAR(100) NOT NULL,
+  Cpf VARCHAR(11) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Senha VARCHAR(8) NOT NULL,
+  DataNascimento VARCHAR(8) NOT NULL,
+  Rua VARCHAR(50) NOT NULL,
+  Bairro VARCHAR(50) NOT NULL,
+  Numero VARCHAR(6) NOT NULL,
+  Cep VARCHAR(9) NOT NULL,
+  Cidade VARCHAR(50) NOT NULL,
+  Uf VARCHAR(2) NOT NULL,
+  Tipo VarChar(13),
+  PRIMARY KEY(Id)
+);
+
+CREATE TABLE CaracteristicasProduto (
+  Id SERIAL NOT NULL,
+  Produtos_id INT NOT NULL,
+  Chave VARCHAR(30) NOT NULL,
+  Valor VARCHAR(200) NOT NULL,
+  PRIMARY KEY(Id),
+  FOREIGN KEY(Produtos_id)
+    REFERENCES Produtos(id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE Avaliacoes (
+  Id SERIAL NOT NULL,
+  usuarios_Id INT NOT NULL,
+  Produtos_Id INT NOT NULL,
+  Texto TEXT NOT NULL,
+  PRIMARY KEY(Id),
+  FOREIGN KEY(Produtos_Id)
+    REFERENCES Produtos(Id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(Usuarios_Id)
+    REFERENCES Usuarios(Id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE ItensVendas (
+  Id SERIAL NOT NULL,
+  Produtos_Id INT NOT NULL,
+  Vendas_Id INT NOT NULL,
+  Valor FLOAT NOT NULL,
+  Quantidade INTEGER NOT NULL,
+  PRIMARY KEY(Id),
+  FOREIGN KEY(Vendas_Id)
+    REFERENCES Vendas(Id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(Produtos_Id)
+    REFERENCES Produtos(Id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
 
