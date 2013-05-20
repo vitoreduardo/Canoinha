@@ -47,7 +47,7 @@ public class DaoUsuario extends Dao{
 	}
 	
 	public void atualizar(Usuario usuario) throws SQLException{
-		String sql = "UPDATE Clientes SET "+
+		String sql = "UPDATE Usuarios SET "+
 				     "id="+usuario.getId()+", " +
 				     "nome="+aspasSimples(usuario.getNome())+", " +
 				     "cpf="+aspasSimples(usuario.getCpf())+", " +
@@ -67,13 +67,13 @@ public class DaoUsuario extends Dao{
 	}
 	
 	public void excluir(int id) throws SQLException{
-		String sql = "DELETE FROM Clientes "+ 
+		String sql = "DELETE FROM Usuarios "+ 
 	                 "WHERE id="+id;										
 		smtm.executeUpdate(sql);				
 	}	
 	
 	public Usuario buscar(int id) throws SQLException{
-		String sql = "Select * FROM Clientes "+ 
+		String sql = "Select * FROM Usuarios "+ 
 	                 "WHERE id="+id;										
 		ResultSet rsUsuarios = smtm.executeQuery(sql);
 		Usuario usuario = new Usuario();
@@ -107,14 +107,15 @@ public class DaoUsuario extends Dao{
 	}
 	
 	public Usuario buscar(String email, String senha) throws SQLException{
-		String sql = "Select * FROM Clientes "+ 
+		String sql = "Select * FROM Usuarios "+ 
 	                 "WHERE email="+aspasSimples(email)+" AND "+
 				     "      senha="+aspasSimples(senha);
 		ResultSet rsUsuarios = smtm.executeQuery(sql);
-		Usuario usuario = new Usuario();
+		Usuario usuario = null;
 		
 		if(rsUsuarios != null){
-			while(rsUsuarios.next()){				
+			while(rsUsuarios.next()){
+				usuario = new Usuario();
 				usuario.setId(rsUsuarios.getInt("id"));
 				usuario.setNome(rsUsuarios.getString("nome"));
 				usuario.setCpf(rsUsuarios.getString("cpf"));
@@ -142,7 +143,7 @@ public class DaoUsuario extends Dao{
 	}
 	
 	public List<Usuario> buscar() throws SQLException{
-		String sql = "Select * FROM Clientes ";
+		String sql = "Select * FROM Usuarios ";
 		
 		ResultSet rsUsuarios = smtm.executeQuery(sql);
 		Usuario usuario = new Usuario();

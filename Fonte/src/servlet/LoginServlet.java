@@ -16,50 +16,50 @@ import controller.LoginController;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public LoginServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		/*PrintWriter out = response.getWriter();
-		
-		if(email.equals("email") && senha.equals("senha")){
-			out.println(email);
-			out.println(senha);
-		}else{
-			response.sendRedirect("index.jsp");
-		}*/
-		
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		/*
+		 * PrintWriter out = response.getWriter();
+		 * 
+		 * if(email.equals("email") && senha.equals("senha")){
+		 * out.println(email); out.println(senha); }else{
+		 * response.sendRedirect("index.jsp"); }
+		 */
+
 		try {
 			String email = request.getParameter("login_email");
 			String senha = request.getParameter("login_senha");
-			
+
 			LoginController loginController = new LoginController();
 			Usuario usuario = loginController.logar(email, senha);
-			
-			if(usuario==null){
+
+			if (usuario == null) {
 				response.sendRedirect("index.jsp");
+			} else {
+				if (usuario.getTipo().equals(TipoUsuario.USUARIO)) {
+					response.sendRedirect("index.jsp");
+				} else if (usuario.getTipo().equals(TipoUsuario.ADMINISTRADOR)) {
+					response.sendRedirect("admin/dashboard.jsp");
+				}
 			}
-			
-			if(usuario.getTipo().equals(TipoUsuario.USUARIO)){
-				response.sendRedirect("http:\\www.google.com.br");
-			}
-			else if(usuario.getTipo().equals(TipoUsuario.ADMINISTRADOR)){
-				response.sendRedirect("http:\\www.globo.com");
-			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

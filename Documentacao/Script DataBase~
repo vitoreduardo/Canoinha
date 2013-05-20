@@ -6,7 +6,7 @@ CREATE TABLE Categorias (
 
 CREATE TABLE Produtos (
   Id SERIAL NOT NULL,
-  Categorias_Id SERIAL NOT NULL,
+  Categorias_Id INT NOT NULL,
   Nome VARCHAR(255) NOT NULL,
   PrecoDeCompra FLOAT NOT NULL,
   PrecoDeVenda FLOAT NOT NULL,

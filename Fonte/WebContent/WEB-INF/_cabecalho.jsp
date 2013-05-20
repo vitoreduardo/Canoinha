@@ -23,9 +23,11 @@
 		<!-- Navigation -->
 		<div id="navigation">			
 			<form action="LoginServlet" method="post">
-				<input name="login_email" type="text" class="field" value="Email" title="Email" />
-				<input name="login_senha" type="text" class="field" value="Senha" title="Senha" />
-				<div class="form-buttons"><input type="submit" value="Login" class="submit-btn" /></div>
+			   <div class="input-append">
+				<input name="login_email" type="text" class="field" placeholder="Digite seu Email" />								
+				<input name="login_senha" type="password" class="field" placeholder="Digite sua Senha" />
+				<button class="btn" type="submit">Login</button>
+	           </div>		
 			</form>
 			<!--  
 			<ul>
