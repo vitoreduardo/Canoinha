@@ -6,7 +6,7 @@ public class Endereco {
 	private String numero;
 	private String cep;
 	private String cidade;
-	private String uf;
+	private String uf;	
 
 	public String getRua() {
 		return rua;

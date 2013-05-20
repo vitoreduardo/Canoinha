@@ -108,7 +108,7 @@ public class DaoUsuario extends Dao{
 	
 	public Usuario buscar(String email, String senha) throws SQLException{
 		String sql = "Select * FROM Clientes "+ 
-	                 "WHERE email="+aspasSimples(email)+" "+
+	                 "WHERE email="+aspasSimples(email)+" AND "+
 				     "      senha="+aspasSimples(senha);
 		ResultSet rsUsuarios = smtm.executeQuery(sql);
 		Usuario usuario = new Usuario();

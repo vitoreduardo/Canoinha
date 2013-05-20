@@ -22,7 +22,11 @@
 		<div id="logo"><h1><a href="#">Canoinha</a></h1><span><br>Aqui tem de tudo!</br></span></div>
 		<!-- Navigation -->
 		<div id="navigation">			
-			<ul><li>&nbsp;</li></ul>
+			<form action="LoginServlet" method="post">
+				<input name="login_email" type="text" class="field" value="Email" title="Email" />
+				<input name="login_senha" type="text" class="field" value="Senha" title="Senha" />
+				<div class="form-buttons"><input type="submit" value="Login" class="submit-btn" /></div>
+			</form>
 			<!--  
 			<ul>
 				<li><a href="#" class="active">Principal</a></li>

@@ -9,8 +9,8 @@ import java.io.*;
 public class Conexao {
 	private String stringConnection;
 	
-	public Conexao() {
-		stringConnection = "jdbc:postgresql://localhost:5432/CanoinhaDB";
+	public Conexao() {      
+		stringConnection = "jdbc:postgresql://localhost:5432/Canoinha";
 	}
 	
 	public Conexao(String stringConnection){
