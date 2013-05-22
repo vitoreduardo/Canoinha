@@ -1,0 +1,80 @@
+package servlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import model.Conexao;
+import model.Produto;
+import dao.DaoProduto;
+
+/**
+ * Servlet implementation class AdicionarProdutoServler
+ */
+public class AdicionarProdutoServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AdicionarProdutoServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nome = request.getParameter("nome");
+		double precoDeCompra = Double.parseDouble(request.getParameter("preco_compra"));
+		double precoDeVenda = Double.parseDouble(request.getParameter("preco_venda"));
+		double valorDesconto = Double.parseDouble(request.getParameter("valor_desconto"));
+		String informacoes = request.getParameter("informacoes");
+		//HashMap<String, String> lista = new HashMap<String, String>();
+		int quantidadeDisponivel = Integer.parseInt(request.getParameter("quantidade_disponivel"));
+		HttpSession session = request.getSession(true);
+		
+		Produto produto = new Produto();
+		produto.setNome(nome);
+		produto.setPrecoDeCompra(precoDeCompra);
+		produto.setPrecoDeVenda(precoDeVenda);
+		produto.setValorDesconto(valorDesconto);
+		produto.setInformacoes(informacoes);
+		produto.setQuantidadeDisponivel(quantidadeDisponivel);
+		
+		Conexao conn = null;
+		conn = new Conexao();
+		
+		DaoProduto daoProduto = new DaoProduto( conn );
+		try {
+			daoProduto.inserir(produto);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			List<Produto> listaProduto = daoProduto.buscar();
+			session.setAttribute("listaProduto",listaProduto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		response.sendRedirect("index.jsp?msg=Produto Cadastrado com Sucesso");
+	}
+}

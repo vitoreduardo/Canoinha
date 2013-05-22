@@ -26,7 +26,7 @@ public class DaoCategoria extends Dao{
         categoria.setId(gerarSequencia("categorias_id_seq"));
 		
 		String sql = "INSERT INTO categorias "+
-	                 "(id, nome, produto_id) "+
+	                 "(id, nome) "+
 	                 "VALUES ("+
 	                 categoria.getId()+","+
 	                 aspasSimples(categoria.getNome().toString())+")" ;

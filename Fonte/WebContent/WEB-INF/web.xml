@@ -14,4 +14,24 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdicionarProdutoServlet</display-name>
+    <servlet-name>AdicionarProdutoServlet</servlet-name>
+    <servlet-class>servlet.AdicionarProdutoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdicionarProdutoServlet</servlet-name>
+    <url-pattern>/AdicionarProdutoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdicionarCategoriaServlet</display-name>
+    <servlet-name>AdicionarCategoriaServlet</servlet-name>
+    <servlet-class>servlet.AdicionarCategoriaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdicionarCategoriaServlet</servlet-name>
+    <url-pattern>/AdicionarCategoriaServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
