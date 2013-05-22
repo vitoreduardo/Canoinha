@@ -1,21 +1,28 @@
-	<!-- Main -->
-	<div id="main" class="shell">
-		<!-- Sidebar -->
-		<div id="sidebar">
-			<ul class="categories">
-				<li>
-					<h4>Categorias</h4>
-					<ul>
-						<li><a href="#">Livros</a></li>
-						<li><a href="#">Música</a></li>
-						<li><a href="#">Celular e Telefonia</a></li>
-						<li><a href="#">Informática</a></li>
-						<li><a href="#">Cameras e Filmadoras</a></li>
-						<li><a href="#">Eletrodomésticos</a></li>
-						<li><a href="#">Esporte e Lazer</a></li>
-					</ul>
-				</li>
-				
-			</ul>
-		</div>
-		<!-- End Sidebar -->
+<script>
+	function postCategorias() {
+		$.post('http://localhost:8080/Canoinha/CategoriaServlet',
+				function(data) {
+					$('#itens_menu').html(data);
+				});
+	}
+</script>
+<style type="text/css">
+#img_loading {
+	padding-left: 40px;
+	padding-top: 50px;
+}
+</style>
+<!-- Main -->
+<div id="main" class="shell">
+	<!-- Sidebar -->
+	<div id="sidebar">
+		<ul class="categories">
+			<li>
+				<h4>Categorias</h4>
+				<ul id="itens_menu">
+					<img id="img_loading" src="img/loading.gif" width="50" height="50">
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<!-- End Sidebar -->

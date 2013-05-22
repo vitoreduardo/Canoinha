@@ -28,7 +28,7 @@ public class DaoCategoria extends Dao{
 		String sql = "INSERT INTO categorias "+
 	                 "(id, nome) "+
 	                 "VALUES ("+
-	                 categoria.getId()+","+
+	                 categoria.getId()+", "+
 	                 aspasSimples(categoria.getNome().toString())+")" ;
 		
 		smtm.executeUpdate(sql);

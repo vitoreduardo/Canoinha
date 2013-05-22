@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import model.Categoria;
 import model.Conexao;
 import model.Produto;
 
@@ -60,7 +61,7 @@ public class DaoProduto extends Dao {
 	                 "valorDesconto="+produto.getValorDesconto()+", "+
 	                 "informacoes="+aspasSimples(produto.getInformacoes())+", "+
 	                 "foto="+aspasSimples(produto.getFotos())+", "+
-	                 "quantidadeDisponivel="+produto.getQuantidadeDisponivel()+" "+
+	                 "quantidadeDisponivel="+produto.getQuantidadeDisponivel()+", "+
 	                 "categorias_id="+produto.getCategoria().getId()+" "+
 	                 "WHERE id="+produto.getId();								
 		
@@ -94,7 +95,7 @@ public class DaoProduto extends Dao {
 				produto.setQuantidadeDisponivel(rsProdutos.getInt("quantidadeDisponivel"));
 				produto.setFotos(rsProdutos.getString("foto"));				
 				produto.setCaracteristicas(this.daoCaracteristicasProduto.buscar(produto.getId()));				
-				produto.setCategoria(this.daoCategoria.buscar(produto.getCategoria().getId()));
+				produto.setCategoria(this.daoCategoria.buscar(rsProdutos.getInt("categorias_id")));
 			}
 			rsProdutos.close();
 		}
@@ -119,7 +120,9 @@ public class DaoProduto extends Dao {
 				produto.setQuantidadeDisponivel(rsProdutos.getInt("quantidadeDisponivel"));
 				produto.setFotos(rsProdutos.getString("foto"));				
 				produto.setCaracteristicas(this.daoCaracteristicasProduto.buscar(produto.getId()));
-				produto.setCategoria(this.daoCategoria.buscar(produto.getCategoria().getId()));
+				int idCategoria = rsProdutos.getInt("categorias_id");
+				Categoria categoria = this.daoCategoria.buscar(idCategoria); 
+				produto.setCategoria(categoria);
 				produtos.add(produto);
 			}
 			rsProdutos.close();

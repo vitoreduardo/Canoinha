@@ -34,4 +34,24 @@
     <servlet-name>AdicionarCategoriaServlet</servlet-name>
     <url-pattern>/AdicionarCategoriaServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CategoriaServlet</display-name>
+    <servlet-name>CategoriaServlet</servlet-name>
+    <servlet-class>servlet.CategoriaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CategoriaServlet</servlet-name>
+    <url-pattern>/CategoriaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProdutoServlet</display-name>
+    <servlet-name>ProdutoServlet</servlet-name>
+    <servlet-class>servlet.ProdutoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdutoServlet</servlet-name>
+    <url-pattern>/ProdutoServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
