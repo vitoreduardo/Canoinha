@@ -59,6 +59,22 @@ public class ProdutoServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	private String formatarNomeDoProduto(String nomeDoProduto){
+		if (nomeDoProduto.length() > 40){
+			return nomeDoProduto.substring(0,40);
+		}
+		else
+			return nomeDoProduto;
+	}
+	
+	private String formatarInformacaoDoProduto(String informacaoDoProduto){
+		if (informacaoDoProduto.length() > 90){
+			return informacaoDoProduto.substring(0,90);
+		}
+		else
+			return informacaoDoProduto;
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -77,9 +93,9 @@ public class ProdutoServlet extends HttpServlet {
 								"<a href='#' class='info'>" +
 									"<span class='holder'>" +
 										"<img src='css/images/image01.jpg' alt='' />" +
-										"<span class='book-name'>"+produto.getNome()+"</span>" +
+										"<span class='book-name'>"+formatarNomeDoProduto(produto.getNome())+"</span>" +
 										//"<span class='author'>by John Smith</span>" +
-										"<span class='description'>"+produto.getInformacoes()+"</span>" +										
+										"<span class='description'>"+formatarInformacaoDoProduto(produto.getInformacoes())+"</span>" +										
 									"</span>" +
 								"</a>" +
 								"<a href='#' class='buy-btn'>now<span class='price'><span class='low'>$</span>"+produto.getPrecoDeVenda()+"<span class='high'>00</span></span></a>" +								
