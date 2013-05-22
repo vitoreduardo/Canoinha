@@ -14,9 +14,15 @@
 	<!--[if IE 6]>
 		<script type="text/javascript" src="js/png-fix.js"></script>
 	<![endif]-->
-	<script type="text/javascript" src="js/functions.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>	
+	<script>
+		function carregarMetodosDeInicializacao(){
+			postCategorias();
+			postProdutos();
+		}
+	</script>
 </head>
-<body>
+<body  onload="carregarMetodosDeInicializacao()">
 	<!-- Header -->
 	<div id="header" class="shell">
 		<div id="logo"><h1><a href="#">Canoinha</a></h1><span><br>Aqui tem de tudo!</br></span></div>

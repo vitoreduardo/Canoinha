@@ -4,23 +4,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>..::: Controle Administrativo :::..</title>
 
-<!-- Le styles -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="assets/css/docs.css" rel="stylesheet">
-    <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-    
+	<!-- TWITTER BOOTSTRAP CSS -->
+	<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- TWITTER BOOTSTRAP JS -->
+    <script src="../js/bootstrap.min.js"></script>
+    <style type="text/css">
+    	#tituloPainelDeControle{
+    		text-align: center;    		 
+    	}
+    </style>
 </head>
 <body>
-<h1>Painel de Controle</h1>
+<h1 id="tituloPainelDeControle">Painel de Controle</h1>
 
-<ul class="nav nav-pills nav-stacked">
-	<li>Cadastro de Usuarios</li>
-	<li>cadastro de Produtos</li>
-	<li>cadastro de Categorias</li>	
-</ul>
+<div class="bs-docs-example span3" id="MenuPainelDeControle">
+	<ul class="nav nav-pills nav-stacked">
+    	<li class="active"><a href="#">Menu</a></li>
+        <li><a href="#">Cadastro de Produtos</a></li>
+        <li><a href="#">Cadastro de Categorias</a></li>
+        <li><a href="../index.jsp">Logout</a></li>
+    </ul>
+</div>
+
+<div span=5></div>
 
 </body>
 </html>

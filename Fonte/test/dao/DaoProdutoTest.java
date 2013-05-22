@@ -4,9 +4,11 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 import junit.framework.Assert;
 
+import model.Categoria;
 import model.Conexao;
 import model.Produto;
 
@@ -16,12 +18,14 @@ import org.junit.Test;
 
 public class DaoProdutoTest {
 	private DaoProduto daoProduto;
+	private DaoCategoria daoCategoria;
 	private Conexao conexao;
 	
 	@Before
 	public void setUp() throws Exception {
 		this.conexao = new Conexao("jdbc:postgresql://localhost:5432/CanoinhaTestDB");
-		this.daoProduto = new DaoProduto(this.conexao); 
+		this.daoProduto = new DaoProduto(this.conexao);
+		this.daoCategoria = new DaoCategoria(this.conexao);
 	}
 
 	@After
@@ -30,7 +34,14 @@ public class DaoProdutoTest {
 		this.daoProduto = null;
 	}
 	
-	private Produto produtoPadrao(){
+	private Categoria categoriaPadrao(){
+		Categoria categoria = new Categoria();
+		categoria.setNome("Categoria de Teste");
+		return categoria;
+	}
+	
+	private Produto produtoPadrao() throws SQLException{
+		daoCategoria.inserir(categoriaPadrao());
 		Produto produtoEsperado = new Produto();			
 		produtoEsperado.setNome("Produto teste");
 		produtoEsperado.setFotos("foto.jpg");
@@ -46,6 +57,10 @@ public class DaoProdutoTest {
 		caracteristicas.put("Sistema Operacional", "Windows 8");
 		produtoEsperado.setCaracteristicas(caracteristicas);
 		
+		List<Categoria> categorias = daoCategoria.buscar();
+		
+		produtoEsperado.setCategoria(categorias.get(0));
+		
 		return produtoEsperado;
 	}
 
@@ -56,8 +71,8 @@ public class DaoProdutoTest {
 	 */
 	@Test
 	public void inserir_produto() throws SQLException {
-		Produto produtoEsperado = produtoPadrao();
 		
+		Produto produtoEsperado = produtoPadrao();		
 		daoProduto.inserir(produtoEsperado);
 		
 		Produto produtoAtual = daoProduto.buscar(produtoEsperado.getId());
@@ -66,8 +81,9 @@ public class DaoProdutoTest {
 		Assert.assertEquals(produtoEsperado.getInformacoes(), produtoAtual.getInformacoes());
 		Assert.assertEquals(produtoEsperado.getPrecoDeCompra(), produtoAtual.getPrecoDeCompra());
 		Assert.assertEquals(produtoEsperado.getCaracteristicas().size(), produtoAtual.getCaracteristicas().size());
-		
+			
 		daoProduto.excluir(produtoEsperado.getId());
+		daoCategoria.excluir(produtoEsperado.getCategoria().getId());
 	}
 	
 	/**
@@ -76,6 +92,7 @@ public class DaoProdutoTest {
 	 */
 	@Test
 	public void inserir_produto_sem_caracteristicas() throws SQLException{
+		daoCategoria.inserir(categoriaPadrao());
 		Produto produtoEsperado = new Produto();			
 		produtoEsperado.setNome("Produto teste");
 		produtoEsperado.setFotos("foto.jpg");
@@ -84,6 +101,8 @@ public class DaoProdutoTest {
 		produtoEsperado.setPrecoDeVenda(3);
 		produtoEsperado.setQuantidadeDisponivel(1000);
 		produtoEsperado.setValorDesconto(0);
+        List<Categoria> categorias = daoCategoria.buscar();
+		produtoEsperado.setCategoria(categorias.get(0));
 		
 		daoProduto.inserir(produtoEsperado);
 		
@@ -93,6 +112,7 @@ public class DaoProdutoTest {
 		Assert.assertEquals(0, produtoAtual.getCaracteristicas().size());
 		
 		daoProduto.excluir(produtoEsperado.getId());
+		daoCategoria.excluir(produtoEsperado.getCategoria().getId());
 	}
 	
 	/**
