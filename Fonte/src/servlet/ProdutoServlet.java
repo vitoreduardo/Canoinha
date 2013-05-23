@@ -32,32 +32,8 @@ public class ProdutoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		try {
-			Conexao conexao = new Conexao();
-			DaoProduto daoProduto = new DaoProduto(conexao);
-			List<Produto> produtos = daoProduto.buscar();
-			
-			for (Produto categoria : produtos) {
-				out.println("<li>" +
-							"<div class='product'>" +
-								"<a href='#' class='info'>" +
-									"<span class='holder'>" +
-										"<img src='css/images/image01.jpg' alt='' />" +
-										"<span class='book-name'>Book Name</span>" +
-										"<span class='author'>by John Smith</span>" +
-										"<span class='description'>Maecenas vehicula ante eu enim pharetra<br />scelerisque dignissim <br />sollicitudin nisi</span>" +
-									"</span>" +
-								"</a>" +
-								"<a href='#' class='buy-btn'>BUY NOW <span class='price'><span class='low'>$</span>22<span class='high'>00</span></span></a>" +
-							"</div>" +
-							"</li>");				  
-			}
-		} catch (SQLException e) {			
-			e.printStackTrace();
-		}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		//
 	}
 	
 	private String formatarNomeDoProduto(String nomeDoProduto){
@@ -76,10 +52,7 @@ public class ProdutoServlet extends HttpServlet {
 			return informacaoDoProduto;
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void buscarTodos(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		try {
@@ -105,6 +78,15 @@ public class ProdutoServlet extends HttpServlet {
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String acao = request.getParameter("acao");
+		
+		if(acao.equals("BuscarTodos")){
+			buscarTodos(request, response);
+		}
+		
 	}
 
 }

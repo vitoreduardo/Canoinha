@@ -2,9 +2,10 @@
 <%@ include file="/WEB-INF/_menu.jsp"%>
 <script>
 	function postProdutos() {
-		$.post('http://localhost:8080/Canoinha/ProdutoServlet', function(data) {
-			$('#itens_produtos').html(data);
-		});
+		$.post('http://localhost:8080/Canoinha/ProdutoServlet',{acao:'BuscarTodos'}, 
+			function(data) {
+				$('#itens_produtos').html(data);
+			});
 	}
 </script>
 <!-- Content -->
@@ -17,5 +18,6 @@
 		</ul>
 		<!-- End Products -->
 	</div>
+	<!-- Products -->
 </div>
 <%@ include file="/WEB-INF/_rodape.jsp"%>
