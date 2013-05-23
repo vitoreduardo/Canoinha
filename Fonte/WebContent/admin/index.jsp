@@ -8,14 +8,15 @@ model.*"%>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 <title>Cadastro de Produtos</title>
 </head>
 <body>
+    <form method="post" id="form_prepare">
 	<a href="CadastrarProduto.jsp">Novo Cadastro</a>
-	<table class="table table-bordered">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -36,13 +37,14 @@ model.*"%>
 				<td><%=contato.getId()%></td>
 				<td><%=contato.getNome()%></td>
 				<td><%=contato.getPrecoDeVenda()%></td>
-				<td><input type="button" value="Editar"></td>
-				<td><input type="button" value="Excluir"></a></td>
+				<td><a href=/Canoinha/PreencherFormulario?id=<%=contato.getId()%>>Atualizar</a></td>		
+				<td><input type="button" value="Excluir"></td>
 			</tr>
 			<%
 				}
 			%>
 		</tbody>
+		</form>
 	</table>
 </body>
 </html>

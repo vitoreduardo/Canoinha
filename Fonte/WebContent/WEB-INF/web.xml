@@ -54,4 +54,24 @@
     <servlet-name>ProdutoServlet</servlet-name>
     <url-pattern>/ProdutoServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AlterarProdutoServlet</display-name>
+    <servlet-name>AlterarProdutoServlet</servlet-name>
+    <servlet-class>servlet.AlterarProdutoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlterarProdutoServlet</servlet-name>
+    <url-pattern>/AlterarProdutoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PreencherFormulario</display-name>
+    <servlet-name>PreencherFormulario</servlet-name>
+    <servlet-class>servlet.PreencherFormulario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreencherFormulario</servlet-name>
+    <url-pattern>/PreencherFormulario</url-pattern>
+  </servlet-mapping>
 </web-app>
