@@ -24,7 +24,7 @@
     	<li class="active"><a href="#">Menu</a></li>
         <li><a href="#">Cadastro de Produtos</a></li>
         <li><a href="#">Cadastro de Categorias</a></li>
-        <li><a href="../index.jsp">Logout</a></li>
+        <li><a href="logout.jsp">Logout</a></li>
     </ul>
 </div>
 

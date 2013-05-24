@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.TipoUsuario;
 import model.Usuario;
@@ -29,18 +30,11 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		/*
-		 * PrintWriter out = response.getWriter();
-		 * 
-		 * if(email.equals("email") && senha.equals("senha")){
-		 * out.println(email); out.println(senha); }else{
-		 * response.sendRedirect("index.jsp"); }
-		 */
-
+		
 		try {
 			String email = request.getParameter("login_email");
 			String senha = request.getParameter("login_senha");
+			HttpSession session = request.getSession();
 
 			LoginController loginController = new LoginController();
 			Usuario usuario = loginController.logar(email, senha);
@@ -48,6 +42,7 @@ public class LoginServlet extends HttpServlet {
 			if (usuario == null) {
 				response.sendRedirect("index.jsp");
 			} else {
+				session.setAttribute("usuario", usuario);
 				if (usuario.getTipo().equals(TipoUsuario.USUARIO)) {
 					response.sendRedirect("index.jsp");
 				} else if (usuario.getTipo().equals(TipoUsuario.ADMINISTRADOR)) {
@@ -56,7 +51,6 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
