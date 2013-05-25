@@ -20,7 +20,7 @@ public class Conexao {
 	public Connection getConexao() throws SQLException{
 		try {
 			Class.forName("org.postgresql.Driver" );
-			return DriverManager.getConnection(stringConnection,"postgres","postgres");
+			return DriverManager.getConnection(stringConnection,"postgres","master");
 		} catch (ClassNotFoundException e) {
 			throw new SQLException(e.getMessage());
 		}				
