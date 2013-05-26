@@ -39,7 +39,7 @@ public class ValidacaoUsuario implements Filter{
         }
         
         HttpSession session = req.getSession();  
-        Usuario user = (Usuario) session.getAttribute("usuario");  
+        Usuario user = (Usuario) session.getAttribute("administrador");  
         if(user!=null || valido){
         	filter.doFilter(request, response);
         	return;

@@ -1,5 +1,5 @@
 
 <% 
-request.getSession().removeAttribute("usuario");
+request.getSession().removeAttribute("administrador");
 response.sendRedirect("../index.jsp");
 %>
