@@ -53,6 +53,14 @@ public class DaoProduto extends Dao {
 		}
 	}
 	
+	public void alterarsaldo(int idProduto, int saldo) throws SQLException{
+		String sql = "UPDATE Produtos SET "+
+                	 "quantidadeDisponivel="+saldo+" "+
+                     "WHERE id="+idProduto;								
+	 
+    	smtm.executeUpdate(sql);
+	}
+	
 	public void atualizar(Produto produto) throws SQLException{
 		String sql = "UPDATE Produtos SET "+
 	                 "nome="+aspasSimples(produto.getNome())+", "+

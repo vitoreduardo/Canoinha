@@ -9,7 +9,20 @@ body {
 }
 
 <!--Código de terceiros-->
-
+#conteudo .detalhe-curso .detalhe-curso-valor {
+    font-size: 20px;
+    color: #DF7914;
+    font-weight: bold;
+    margin-top: 15px;
+}
+.box .info .valor {
+            float: right;
+            color: #333;
+            height: 15px;
+            display: inline-block;
+            text-shadow: none;
+            text-align: center;
+        }
 <!--Código de terceiros-->
 a { color: #0252aa; text-decoration: none; cursor: pointer; }
 a:hover { text-decoration: underline; }
@@ -58,7 +71,7 @@ textarea { overflow: auto; }
 #slider .jcarousel-next { position: absolute; top: 155px; width: 28px; height: 47px; background: url(images/slider-directions.png) no-repeat 0 0; }
 #slider .jcarousel-prev { left: -40px; }
 #slider .jcarousel-next { right: -40px; background-position: right 0; cursor: pointer; }
-#slider .nav { position: absolute; bottom: -7px; left: 459px; width: 80px; height: 14px; z-index: 100; }
+#slider .nav { position: absolute; bottom: -30px; left: 459px; width: 80px; height: 14px; z-index: 100; }
 #slider .nav a { width: 14px; height: 14px; font-size: 0; line-height: 0; text-indent: -4000px; background: url(images/slider-nav.png) no-repeat 0 0; margin: 0 3px 0 0; float: left; display: inline; margin: 0 3px; }
 #slider .nav a.active { background-position: right 0; }
 

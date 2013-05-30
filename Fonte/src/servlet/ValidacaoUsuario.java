@@ -30,11 +30,12 @@ public class ValidacaoUsuario implements Filter{
 		HttpServletRequest req = (HttpServletRequest) request;  
         HttpServletResponse res = (HttpServletResponse) response;
         String url = req.getServletPath();
+               
         boolean valido = false;
         if(url.endsWith("/index.jsp") || url.endsWith(".css") || url.endsWith(".js")||url.endsWith("/LoginServlet")||
            url.endsWith("_cabecalho.jsp")||url.endsWith("_menu.jsp")||url.endsWith("_rodape.jsp")||
-           url.endsWith(".png") || url.endsWith(".gif")|| url.endsWith("logout.jsp")||
-           url.endsWith("ProdutoServlet")||url.endsWith("CategoriaServlet")){
+           url.endsWith(".png") || url.endsWith(".gif")|| url.endsWith("logout.jsp")|| url.endsWith(".jpg")||
+           url.endsWith("ProdutoServlet")||url.endsWith("CategoriaServlet")||url.endsWith("home.html")||url.endsWith("CheckoutServlet")){
         	valido = true;
         }
         
@@ -44,8 +45,7 @@ public class ValidacaoUsuario implements Filter{
         	filter.doFilter(request, response);
         	return;
         }  
-        res.sendRedirect("http://localhost:8080/Canoinha/index.jsp");
-		
+        res.sendRedirect("http://localhost:8080/Canoinha/index.jsp");		
 	}
 
 	@Override

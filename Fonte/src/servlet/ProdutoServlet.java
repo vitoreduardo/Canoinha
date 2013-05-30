@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,14 +30,7 @@ public class ProdutoServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		//
-	}
-	
-	private String formatarNomeDoProduto(String nomeDoProduto){
+    private String formatarNomeDoProduto(String nomeDoProduto){
 		if (nomeDoProduto.length() > 40){
 			return nomeDoProduto.substring(0,40);
 		}
@@ -63,7 +57,7 @@ public class ProdutoServlet extends HttpServlet {
 			for (Produto produto : produtos) {
 				out.println("<li>" +
 							"<div class='product'>" +
-								"<a href='#' class='info'>" +
+								"<a href='ProdutoServlet?codigoProduto="+produto.getId()+"&acao=BuscarProduto' class='info'>" +
 									"<span class='holder'>" +
 										"<img src='css/images/image01.jpg' alt='' />" +
 										"<span class='book-name'>"+formatarNomeDoProduto(produto.getNome())+"</span>" +
@@ -71,10 +65,29 @@ public class ProdutoServlet extends HttpServlet {
 										"<span class='description'>"+formatarInformacaoDoProduto(produto.getInformacoes())+"</span>" +										
 									"</span>" +
 								"</a>" +
-								"<a href='#' class='buy-btn'>now<span class='price'><span class='low'>$</span>"+produto.getPrecoDeVenda()+"<span class='high'>00</span></span></a>" +								
+								"<a href='#' class='buy-btn'><span class='price'><span class='low'>$</span>"+produto.getPrecoDeVenda()+"<span class='high'>00</span></span></a>" +								
 							"</div>" +
 							"</li>");				  
 			}
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+	}
+	
+	private void buscarProduto(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		response.setContentType("text/html");
+		try {
+			String codigoProduto = request.getParameter("codigoProduto");
+
+			Conexao conexao = new Conexao();
+			DaoProduto daoProduto = new DaoProduto(conexao);
+			Produto produto = daoProduto.buscar(Integer.parseInt(codigoProduto));
+				
+			request.setAttribute("produtoDetalhe", produto);
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher ("detalheProduto.jsp"); 
+			requestDispatcher.forward(request, response); 
+			
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
@@ -87,6 +100,17 @@ public class ProdutoServlet extends HttpServlet {
 			buscarTodos(request, response);
 		}
 		
+	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		String acao = request.getParameter("acao");
+		
+		if(acao.equals("BuscarProduto")){
+			buscarProduto(request, response);
+		}
 	}
 
 }
