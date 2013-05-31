@@ -58,9 +58,6 @@ public class CheckoutServlet extends HttpServlet {
 			}
 			
 		}
-		else if(acao.equals("removerItemCarrinhoDeCompras")){
-			removerProdutoCarrinhoDeCompras(request, response);
-		}
 		
 		response.sendRedirect("index.jsp");
 	}

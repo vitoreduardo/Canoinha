@@ -1,5 +1,8 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="model.TipoUsuario"%>
 <%@page import="model.Usuario" %>
+<%@page import="java.text.DecimalFormat" %>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -70,7 +73,17 @@
 			</c:choose>			
 			</p><p><a href="#" class="cart" ><img src="css/images/cart-icon.png" alt="" /></a>
 			<a href="#myModal" class="sum">
-			0.00						
+					<% 
+						double valorTotal = 0;
+						List<ItemVenda> itensDeVenda = (List<ItemVenda>)session.getAttribute("carrinhoDeCompras");
+						if(itensDeVenda!= null){
+							DecimalFormat df = new DecimalFormat("#,###.00");  							
+							for(ItemVenda itemVenda: itensDeVenda){  
+							   valorTotal += (itemVenda.getQuantidade()*itemVenda.getValor());   
+							}  						
+							out.print("R$"+df.format(valorTotal));
+						}
+					%>
 			</a></p>
 		</div>
 		<!-- End Login-details -->
