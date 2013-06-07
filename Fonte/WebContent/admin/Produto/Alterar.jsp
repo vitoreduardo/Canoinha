@@ -1,29 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<jsp:useBean id="produtos" class="model.Produto" scope="request"/>    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" /> 
-	<link href="../css/bootstrap.min.css" rel="stylesheet" media="screen" />	
-<script type="text/javascript" src="../js/jquery-1.7.1.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#btnAdicionarCaracteristica").click(function () {
-				var tr = '<tr>'+
-					'<td>'+$("input[name=caracteristicas1]").val()+' </td>'+
-					'<td>'+$("input[name=caracteristicas2]").val()+' </td>'+
-					'</tr>'
-				$('#grid').find('tbody').append( tr );
-				return false;
-			});
-		});				
-    </script>   
-
-   </head>
-	   <body>
-		  <form method="post" action="/Canoinha/AdicionarProdutoServlet" id="form_prepare">
+<%@ include file="/WEB-INF/cabecalho.jsp"%>
+	   <div class="container">
+		  <form method="post" action="/Canoinha/ProdutoServlet" id="form_prepare">
 			 <fieldset>
 				<legend>Alteração de Produtos</legend>
 				  Id:<input id="id" type="text" name="id" value=${produtos.id}> <br />
@@ -49,11 +26,22 @@
 						<tbody>
 						</tbody>
 					</table>
+				  <label for="categoria">Categoria</label>
+				  <%
+				     CategoriaController controllerCat = new CategoriaController();
+					 List<Categoria> listaCategoria = controllerCat.buscar();
+				  %>
+				  <select name="categoria">
+				   <% for (Categoria cat : listaCategoria) {%>						  
+						  	<option  value=<%=cat.getId()%>><%=cat.getNome()%></option>
+				   <%}%>	  
+				  </select>
 				  <label for="quantidade">Quantidade Disponivel: </label>
 				  <input id="quantidade" type="text" name="quantidade_disponivel" value=${produtos.quantidadeDisponivel}><br>
-				  <input type="submit" value="Alterar" name="alterar">
-				  <input type="reset" value="Limpar">
+				  <input type="hidden" name="acao" value="AlterarProduto">				  
+				  <input class="btn btn-primary" type="submit" value="Alterar" name="alterar">
+				  <input class="btn" type="reset" value="Limpar">
 			  </fieldset>
 		  </form>
-	   </body>
-</html>
+		  </div>
+<%@ include file="/WEB-INF/rodape.jsp"%>l>

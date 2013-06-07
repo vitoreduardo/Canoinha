@@ -45,7 +45,6 @@ public class ValidacaoUsuario implements Filter{
         	return;
         }  
         res.sendRedirect("http://localhost:8080/Canoinha/index.jsp");
-		
 	}
 
 	@Override

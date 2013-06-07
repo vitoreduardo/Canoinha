@@ -1,5 +1,8 @@
 package dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,6 +18,7 @@ import model.Produto;
 public class DaoUsuario extends Dao{
 	private Conexao conexao;
 	private Statement smtm;
+	private PreparedStatement pstm;
 	
 	public DaoUsuario(Conexao conexao) throws SQLException {
 		super(conexao);
@@ -23,27 +27,28 @@ public class DaoUsuario extends Dao{
 	}
 	
 	public void inserir(Usuario usuario) throws SQLException{
-		usuario.setId(gerarSequencia("clientes_id_seq"));
-		
+		usuario.setId(gerarSequencia("usuarios_id_seq"));
 		String sql = "INSERT INTO Usuarios "+
-	                 "(id, nome, cpf, email, senha, datanascimento, "+
+	                 "(id, nome, cpf, email, senha, data, "+
 	                 "rua, bairro, numero, cep, cidade, uf, tipo) "+
-	                 "VALUES ("+
-	                 usuario.getId()+","+
-	                 aspasSimples(usuario.getNome())+","+
-	                 aspasSimples(usuario.getCpf())+","+
-	                 aspasSimples(usuario.getEmail())+","+
-	                 aspasSimples(usuario.getSenha())+","+
-	                 aspasSimples(formatarData(usuario.getDataNascimento()))+","+
-               		 aspasSimples(usuario.getEndereco().getRua())+","+
-               		 aspasSimples(usuario.getEndereco().getBairro())+","+
-               		 aspasSimples(usuario.getEndereco().getNumero())+","+
-               		 aspasSimples(usuario.getEndereco().getCep())+","+
-               		 aspasSimples(usuario.getEndereco().getCidade())+","+
-               		 aspasSimples(usuario.getEndereco().getUf())+","+
-	                 aspasSimples(usuario.getTipo().toString())+")" ;
+	                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		pstm = conexao.getConexao().prepareStatement(sql);
+		pstm.setInt(1, usuario.getId());
+		pstm.setString(2, usuario.getNome());
+		pstm.setString(3, usuario.getCpf());
+		pstm.setString(4, usuario.getEmail());
+		pstm.setString(5, usuario.getSenha());
+		//pstm.setString(6, "22071996");
+		pstm.setDate(6, new java.sql.Date(usuario.getDataNascimento().getTime()));
+		pstm.setString(7, usuario.getEndereco().getRua());
+		pstm.setString(8, usuario.getEndereco().getBairro());
+		pstm.setString(9, usuario.getEndereco().getNumero());
+		pstm.setString(10, usuario.getEndereco().getCep());
+		pstm.setString(11, usuario.getEndereco().getCidade());
+		pstm.setString(12, usuario.getEndereco().getUf());
+		pstm.setString(13, usuario.getTipo().name());
 		
-		smtm.executeUpdate(sql);		
+		pstm.execute();
 	}
 	
 	public void atualizar(Usuario usuario) throws SQLException{
@@ -53,7 +58,7 @@ public class DaoUsuario extends Dao{
 				     "cpf="+aspasSimples(usuario.getCpf())+", " +
 				     "email="+aspasSimples(usuario.getEmail())+", " +
 				     "senha="+aspasSimples(usuario.getSenha())+", " +
-				     "datanascimento="+aspasSimples(formatarData(usuario.getDataNascimento()))+", "+
+				     "datanascimento="+aspasSimples("22071996")+", "+
                      "rua="+aspasSimples(usuario.getEndereco().getRua())+", " +
                      "bairro="+aspasSimples(usuario.getEndereco().getBairro())+", " +
                      "numero="+aspasSimples(usuario.getEndereco().getNumero())+", " +
@@ -85,7 +90,7 @@ public class DaoUsuario extends Dao{
 				usuario.setCpf(rsUsuarios.getString("cpf"));
 				usuario.setEmail(rsUsuarios.getString("email"));
 				usuario.setSenha(rsUsuarios.getString("senha"));
-				usuario.setDataNascimento(rsUsuarios.getDate("dataNascimento"));
+//				usuario.setDataNascimento(rsUsuarios.getDate("dataNascimento"));
 				if (rsUsuarios.getString("tipo").equalsIgnoreCase("Administrador")){
 					usuario.setTipo(TipoUsuario.ADMINISTRADOR);
 				}
@@ -121,7 +126,7 @@ public class DaoUsuario extends Dao{
 				usuario.setCpf(rsUsuarios.getString("cpf"));
 				usuario.setEmail(rsUsuarios.getString("email"));
 				usuario.setSenha(rsUsuarios.getString("senha"));
-				usuario.setDataNascimento(rsUsuarios.getDate("dataNascimento"));
+				//usuario.setDataNascimento("22071996");
 				if (rsUsuarios.getString("tipo").equalsIgnoreCase("Administrador")){
 					usuario.setTipo(TipoUsuario.ADMINISTRADOR);
 				}
@@ -146,17 +151,18 @@ public class DaoUsuario extends Dao{
 		String sql = "Select * FROM Usuarios ";
 		
 		ResultSet rsUsuarios = smtm.executeQuery(sql);
-		Usuario usuario = new Usuario();
+
 		
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		if(rsUsuarios != null){
-			while(rsUsuarios.next()){				
+			while(rsUsuarios.next()){
+				Usuario usuario = new Usuario();
 				usuario.setId(rsUsuarios.getInt("id"));
 				usuario.setNome(rsUsuarios.getString("nome"));
 				usuario.setCpf(rsUsuarios.getString("cpf"));
 				usuario.setEmail(rsUsuarios.getString("email"));
 				usuario.setSenha(rsUsuarios.getString("senha"));
-				usuario.setDataNascimento(rsUsuarios.getDate("dataNascimento"));
+				//usuario.setDataNascimento( java.util.Date.parse(rsUsuarios.getString("dataNascimento")));
 				if (rsUsuarios.getString("tipo").equalsIgnoreCase("Administrador")){
 					usuario.setTipo(TipoUsuario.ADMINISTRADOR);
 				}
