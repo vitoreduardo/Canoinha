@@ -1,4 +1,10 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="model.TipoUsuario"%>
+<%@page import="model.Usuario" %>
+<%@page import="java.text.DecimalFormat" %>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 <head>
@@ -24,6 +30,7 @@
 	</script>
 </head>
 <body  onload="carregarMetodosDeInicializacao()">
+<%@ include file="/WEB-INF/_carrinhodecompras.jsp"%>
 	<!-- Header -->
 	<div id="header" class="shell">
 		<div id="logo"><h1><a href="#">Canoinha</a></h1><span><br>Aqui tem de tudo!</br></span></div>
@@ -51,7 +58,33 @@
 		<div class="cl">&nbsp;</div>
 		<!-- Login-details -->
 		<div id="login-details">
-			<p>Bem vindo, <a href="#" id="user">Visitante</a> .</p><p><a href="#" class="cart" ><img src="css/images/cart-icon.png" alt="" /></a>Carrinho de Compras (0) <a href="#" class="sum">$0.00</a></p>
+			<p>
+			Bem vindo,  
+			<c:choose>
+				<c:when test="${not empty usuario.nome}">
+					<a href="#myModal" data-toggle="modal">
+						${usuario.getNome()}
+					</a>	
+					<a href="admin/logout.jsp">Efetuar Logout(sair)</a>
+				</c:when>
+				<c:when test="${empty usuario.nome}">
+					Visitante
+				</c:when>
+			</c:choose>			
+			</p><p><a href="#" class="cart" ><img src="css/images/cart-icon.png" alt="" /></a>
+			<a href="#myModal" class="sum">
+					<% 
+						double valorTotal = 0;
+						List<ItemVenda> itensDeVenda = (List<ItemVenda>)session.getAttribute("carrinhoDeCompras");
+						if(itensDeVenda!= null){
+							DecimalFormat df = new DecimalFormat("#,###.00");  							
+							for(ItemVenda itemVenda: itensDeVenda){  
+							   valorTotal += (itemVenda.getQuantidade()*itemVenda.getValor());   
+							}  						
+							out.print("R$"+df.format(valorTotal));
+						}
+					%>
+			</a></p>
 		</div>
 		<!-- End Login-details -->
 	</div>

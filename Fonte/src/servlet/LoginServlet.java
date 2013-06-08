@@ -41,11 +41,12 @@ public class LoginServlet extends HttpServlet {
 
 			if (usuario == null) {
 				response.sendRedirect("index.jsp");
-			} else {
-				session.setAttribute("usuario", usuario);
+			} else {				
 				if (usuario.getTipo().equals(TipoUsuario.USUARIO)) {
+					session.setAttribute("usuario", usuario);
 					response.sendRedirect("index.jsp");
 				} else if (usuario.getTipo().equals(TipoUsuario.ADMINISTRADOR)) {
+					session.setAttribute("administrador", usuario);
 					response.sendRedirect("admin/dashboard.jsp");
 				}
 			}

@@ -33,18 +33,15 @@ public class ValidacaoUsuario implements Filter{
         boolean valido = false;
         if(url.endsWith("/index.jsp") || url.endsWith(".css") || url.endsWith(".js")||url.endsWith("/LoginServlet")||
            url.endsWith("_cabecalho.jsp")||url.endsWith("_menu.jsp")||url.endsWith("_rodape.jsp")||
-           url.endsWith(".png") || url.endsWith(".gif")|| url.endsWith("logout.jsp")||
-           url.endsWith("ProdutoServlet")||url.endsWith("CategoriaServlet")){
         	valido = true;
         }
         
         HttpSession session = req.getSession();  
-        Usuario user = (Usuario) session.getAttribute("usuario");  
         if(user!=null || valido){
         	filter.doFilter(request, response);
         	return;
         }  
-        res.sendRedirect("http://localhost:8080/Canoinha/index.jsp");
+        res.sendRedirect("http://localhost:8080/Canoinha/index.jsp");		
 	}
 
 	@Override
