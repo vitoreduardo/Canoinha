@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,6 +16,7 @@ import model.Usuario;
 public class DaoCategoria extends Dao{
 	private Conexao conexao;
 	private Statement smtm;
+	private PreparedStatement pstm;
 	
 	public DaoCategoria(Conexao conexao) throws SQLException {
 		super(conexao);
@@ -27,11 +29,12 @@ public class DaoCategoria extends Dao{
 		
 		String sql = "INSERT INTO categorias "+
 	                 "(id, nome) "+
-	                 "VALUES ("+
-	                 categoria.getId()+", "+
-	                 aspasSimples(categoria.getNome().toString())+")" ;
+	                 "VALUES (?, ?)";
 		
-		smtm.executeUpdate(sql);
+		pstm = conexao.getConexao().prepareStatement(sql);
+		pstm.setInt(1, categoria.getId());
+		pstm.setString(2, categoria.getNome());
+		pstm.execute();
 	}
 	
 	public void atualizar(Categoria categoria) throws SQLException{

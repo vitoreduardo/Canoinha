@@ -1,10 +1,10 @@
 package dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import model.Categoria;
@@ -14,6 +14,7 @@ import model.Produto;
 public class DaoProduto extends Dao {
 	private Conexao conexao;
 	private Statement smtm;
+	private PreparedStatement pstm;
 	private DaoCaracteristicasProduto daoCaracteristicasProduto; 
 	private DaoCategoria daoCategoria;
 	
@@ -35,18 +36,20 @@ public class DaoProduto extends Dao {
 		String sql = "INSERT INTO Produtos "+
 	                 "(id, nome, precoDeCompra, precoDeVenda, valorDesconto, "+
 	                 "informacoes, quantidadeDisponivel, foto, categorias_id) "+
-	                 "VALUES ("+
-	                 produto.getId()+","+
-	                 aspasSimples(produto.getNome())+","+
-	                 produto.getPrecoDeCompra()+","+
-	                 produto.getPrecoDeVenda()+","+
-	                 produto.getValorDesconto()+","+
-	                 aspasSimples(produto.getInformacoes())+","+
-	                 produto.getQuantidadeDisponivel()+","+
-	                 aspasSimples(produto.getFotos())+","+
-	                 produto.getCategoria().getId()+")" ;
+	                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		smtm.executeUpdate(sql);
+		pstm = conexao.getConexao().prepareStatement(sql);
+		pstm.setInt(1, produto.getId());
+		pstm.setString(2, produto.getNome());
+		pstm.setDouble(3, produto.getPrecoDeCompra());
+		pstm.setDouble(4, produto.getPrecoDeVenda());
+		pstm.setDouble(5, produto.getValorDesconto());
+		pstm.setString(6, produto.getInformacoes());
+		pstm.setInt(7, produto.getQuantidadeDisponivel());
+		pstm.setString(8, produto.getFotos());
+		pstm.setInt(9, produto.getCategoria().getId());
+		
+		pstm.execute();
 		
 		if(produto.getCaracteristicas().size() > 0){
 			this.daoCaracteristicasProduto.inserir(produto.getId(),produto.getCaracteristicas());

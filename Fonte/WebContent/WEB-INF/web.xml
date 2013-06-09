@@ -82,14 +82,21 @@
     <filter-name>validacaoUsuario</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <servlet>
-    <description></description>
+       <filter-name>validacaoUsuario</filter-name>  
+       <filter-class>servlet.ValidacaoUsuario</filter-class>  
+   </filter>  
+   <filter-mapping>  
+       <filter-name>validacaoUsuario</filter-name>  
+	   <url-pattern>/*</url-pattern>  
+   </filter-mapping>
+    
+
+    <display-name>ExcluirProdutoServlet</display-name>
+    <servlet-name>ExcluirProdutoServlet</servlet-name>
+    <servlet-class>servlet.ExcluirProdutoServlet</servlet-class>
     <display-name>CheckoutServlet</display-name>
     <servlet-name>CheckoutServlet</servlet-name>
     <servlet-class>servlet.CheckoutServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
     <servlet-name>CheckoutServlet</servlet-name>
     <url-pattern>/CheckoutServlet</url-pattern>
-  </servlet-mapping>
 </web-app>
