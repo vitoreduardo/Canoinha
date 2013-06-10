@@ -1,6 +1,6 @@
 <script>
 	function postCategorias() {
-		$.post('http://localhost:8080/Canoinha/CategoriaServlet',
+		$.post('http://localhost:8080/Canoinha/CategoriaServlet',{acao:'RetornarMenudeCategorias'},
 				function(data) {
 					$('#itens_menu').html(data);
 				});

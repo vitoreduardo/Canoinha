@@ -33,6 +33,6 @@
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-    <button class="btn btn-primary">Finalizar Compra</button>
+    <a href="finalizarVenda.jsp" class="btn btn-primary">Finalizar Compra</a>
   </div>
 </div>
