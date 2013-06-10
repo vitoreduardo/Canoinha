@@ -12,7 +12,8 @@
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="css/images/favicon.ico" />
 	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-	<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="js/jquery-1.9.1.js"></script>	
+	
 	<script type="text/javascript" src="js/jquery.jcarousel.min.js"></script>
 	<!-- TWITTER BOOTSTRAP CSS -->
 	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -43,16 +44,16 @@
 				<button class="btn" type="submit">Login</button>
 	           </div>		
 			</form>
-			<!--  
-			<ul>
-				<li><a href="#" class="active">Principal</a></li>
-				<li><a href="#">Products</a></li>
-				<li><a href="#">Promotions</a></li>
-				<li><a href="#">Profile</a></li>
-				<li><a href="#">About Us</a></li>
-				<li><a href="#">Contacts</a></li>
-			</ul>
-			-->
+			<c:if test="${not empty menssagemErro }">			   
+			   <div class="alert alert-block alert-error fade in">
+            	 <p>"${menssagemErro}"</p>
+          	   </div>          	   
+			</c:if>	
+			<c:if test="${not empty menssagemSucesso }">			   
+			   <div class="alert alert-block alert-success fade in">
+            	 <p>"${menssagemSucesso}"</p>
+          	   </div>          	   
+			</c:if>			
 		</div>
 		<!-- End Navigation -->
 		<div class="cl">&nbsp;</div>

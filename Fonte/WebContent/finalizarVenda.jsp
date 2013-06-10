@@ -13,14 +13,14 @@
 	<div class="products">
 		<h3>Finalizar Venda</h3>
 		<form action="CheckoutServlet" method="post">
-			Nome: <input class="input-xxlarge" name="nomeCliente" type="text" disabled="disabled"	value="${usuario.getNome()}"></br> 
-			Rua: <input class="input-xxlarge" name="ruaCliente" type="text" disabled="disabled" value="${usuario.getEndereco().getRua()}"></br> 
-			Bairro: <input class="input-medium" name="bairroCliente" type="text" disabled="disabled" value="${usuario.getEndereco().getBairro()}"> 
-			Número: <input class="input-mini" name="numeroCliente" type="text" disabled="disabled" value="${usuario.getEndereco().getNumero()}">
+			Nome: <input class="input-xxlarge" name="nomeCliente" type="text" readonly value="${usuario.getNome()}"></br> 
+			Rua: <input class="input-xxlarge" name="ruaCliente" type="text" readonly value="${usuario.getEndereco().getRua()}"></br> 
+			Bairro: <input class="input-medium" name="bairroCliente" type="text" readonly value="${usuario.getEndereco().getBairro()}"> 
+			Número: <input class="input-mini" name="numeroCliente" type="text" readonly value="${usuario.getEndereco().getNumero()}">
 			<hr>
-			Valor a Pagar: <input class="input-medium" name="valorTotal" type="text" disabled="disabled" value=<fmt:formatNumber value="<%=valorTotal%>" pattern="#,#00.00#"></fmt:formatNumber>>
+			Valor a Pagar: <input class="input-medium" name="valorTotal" type="text" value=<fmt:formatNumber value="<%=valorTotal%>" pattern="#,#00.00#"></fmt:formatNumber>  >
 			<hr>
-			<input type="radio" name="tipoDePagamento" value="visa" checked="checked"><img id="cartao" src="img/visa.jpeg"> 
+			<input type="radio" name="tipoDePagamento" value="visa"><img id="cartao" src="img/visa.jpeg"> 
 			<input type="radio" name="tipoDePagamento" value="master"><img id="cartao" src="img/master.jpeg"> 
 			<input type="radio" name="tipoDePagamento" value="visaElectron"><img id="cartao" src="img/visa_electron.jpeg"> 
 			<input type="radio" name="tipoDePagamento" value="masterMaestro"><img id="cartao" src="img/master_maestro.jpeg"> 

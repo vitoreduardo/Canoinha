@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.DaoProduto;
+import dao.DaoUsuario;
 import dao.DaoVenda;
 
 import model.Conexao;
 import model.ItemVenda;
+import model.Usuario;
 import model.Venda;
 
 /**
@@ -77,21 +79,24 @@ public class CheckoutServlet extends HttpServlet {
 	private void finalizarVenda(HttpServletRequest request, HttpServletResponse response) throws SQLException{
 		HttpSession session = request.getSession();
 		List<ItemVenda> itensCarrinhoDeCompra = (List<ItemVenda>)session.getAttribute("carrinhoDeCompras");
+		Usuario usuario = (Usuario)session.getAttribute("usuario");
+		
+		Conexao conexao = new Conexao();
 		
 		Venda venda = new Venda();
 		venda.setData(new Date());
 		venda.setNumeroCartaoDeCredito(request.getParameter("numeroCartao"));
 		venda.setQuantidadeParcelas(Integer.parseInt(request.getParameter("parcelas")));
-		venda.setTipoPagamento(request.getParameter("tipoDepagamento"));
-		venda.setValor(Double.parseDouble(request.getParameter("valorTotal")));
+		venda.setTipoPagamento(request.getParameter("tipoDePagamento"));
+		venda.setValor(Double.parseDouble(request.getParameter("valorTotal").replace(",", ".")));
 		venda.setValorFrete(0);		
-		venda.setItensVendas(itensCarrinhoDeCompra);		
+		venda.setItensVendas(itensCarrinhoDeCompra);			
+		venda.setUsuario(usuario);		
 		
-		Conexao conexao = new Conexao();
 		DaoVenda daoVenda = new DaoVenda(conexao);
 		daoVenda.inserir(venda);
 		
-		request.setAttribute("menssagemErro", "venda realizada com sucesso");
+		request.setAttribute("menssagemSucesso", "venda realizada com sucesso");
 		request.getSession().removeAttribute("carrinhoDeCompras");
 	}
 	

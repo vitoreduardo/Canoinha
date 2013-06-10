@@ -27,14 +27,15 @@ public class DaoVenda extends Dao{
 		venda.setId(gerarSequencia("vendas_id_seq"));
 		
 		String sql = "INSERT INTO Vendas "+
-	                 "(id, data, valor, valorFrete, tipoPagamento, quantidadeParcelas) "+
+	                 "(id, dataHora, valor, valorFrete, tipoPagamento, quantidadeParcelas, Usuarios_id) "+
 	                 "VALUES ("+
 	                 venda.getId()+","+
 	                 aspasSimples(formatarData(venda.getData()))+","+
                		 venda.getValor()+","+
                		 venda.getValorFrete()+","+
                		 aspasSimples(venda.getTipoPagamento())+","+
-               		 venda.getQuantidadeParcelas()+")" ;
+               		 venda.getQuantidadeParcelas()+"," +
+					 venda.getUsuario().getId()+")" ;
 		
 		smtm.executeUpdate(sql);
 		
