@@ -92,6 +92,8 @@ public class CategoriaServlet extends HttpServlet {
 			adicionarCategoria(request, response);
 		}else if(acao.equals("AlterarCategoria")){
 			alterarCategoria(request, response);
+		}else if(acao.equals("RetornarMenudeCategorias")){
+			retornarMenuDeCategorias(request, response);
 		}
 
 	}
@@ -121,6 +123,23 @@ public class CategoriaServlet extends HttpServlet {
 		}
 		response.sendRedirect("/Canoinha/admin/Categoria/index.jsp?msg=Categoria alterado com Sucesso");	
 	}
+	
+	private void retornarMenuDeCategorias(HttpServletRequest request,
+	HttpServletResponse response) throws IOException{
+		Conexao conexao = new Conexao();
+ 		try {
+ 			DaoCategoria daoCategoria = new DaoCategoria(conexao);
+ 			List<Categoria> categorias = daoCategoria.buscar();
+ 			response.setContentType("text/html");
+ 			PrintWriter out = response.getWriter();
+ 			
+ 			for (Categoria categoria : categorias) {
+ 				out.println("<li><a href='#'>"+categoria.getNome()+"</a></li>");				  
+ 			}
+ 		} catch (SQLException e) {			
+ 			e.printStackTrace();
+ 		}		
+	} 
 
 	private void adicionarCategoria(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {

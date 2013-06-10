@@ -3,8 +3,10 @@ package servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.DaoProduto;
+import dao.DaoVenda;
 
 import model.Conexao;
 import model.ItemVenda;
@@ -58,8 +61,38 @@ public class CheckoutServlet extends HttpServlet {
 			}
 			
 		}
+		else if(acao.equals("finalizarVenda")){
+			try {
+				finalizarVenda(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
-		response.sendRedirect("index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void finalizarVenda(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+		HttpSession session = request.getSession();
+		List<ItemVenda> itensCarrinhoDeCompra = (List<ItemVenda>)session.getAttribute("carrinhoDeCompras");
+		
+		Venda venda = new Venda();
+		venda.setData(new Date());
+		venda.setNumeroCartaoDeCredito(request.getParameter("numeroCartao"));
+		venda.setQuantidadeParcelas(Integer.parseInt(request.getParameter("parcelas")));
+		venda.setTipoPagamento(request.getParameter("tipoDepagamento"));
+		venda.setValor(Double.parseDouble(request.getParameter("valorTotal")));
+		venda.setValorFrete(0);		
+		venda.setItensVendas(itensCarrinhoDeCompra);		
+		
+		Conexao conexao = new Conexao();
+		DaoVenda daoVenda = new DaoVenda(conexao);
+		daoVenda.inserir(venda);
+		
+		request.setAttribute("menssagemErro", "venda realizada com sucesso");
+		request.getSession().removeAttribute("carrinhoDeCompras");
 	}
 	
 	private void inserirProdutoCarrinhoDeCompras(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException{

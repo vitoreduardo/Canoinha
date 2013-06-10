@@ -35,8 +35,7 @@ public class ProdutoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Integer idProduto = Integer.parseInt(request.getParameter("id"));
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		String acao = request.getParameter("acao");
 		
 		Conexao conexao = new Conexao();
@@ -54,6 +53,7 @@ public class ProdutoServlet extends HttpServlet {
 		if(acao.equals("Alterar")){
 			Produto produto = new Produto();
 			ProdutoController controller = new ProdutoController();
+			Integer idProduto = Integer.parseInt(request.getParameter("id"));
 			try {
 				produto = controller.buscar(idProduto);
 				
@@ -66,6 +66,7 @@ public class ProdutoServlet extends HttpServlet {
 			}
 		}else if( acao.equals("Excluir") ){
 			ProdutoController controller = new ProdutoController();
+			Integer idProduto = Integer.parseInt(request.getParameter("id"));
 			try {
 				controller.excluir(idProduto);
 
@@ -75,6 +76,28 @@ public class ProdutoServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		else if(acao.equals("MostrarDetalheProduto")){
+			mostrarDetalheProduto(request, response);
+		}
+	}
+	
+	private void mostrarDetalheProduto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		try {
+						String codigoProduto = request.getParameter("codigoProduto");
+			
+						Conexao conexao = new Conexao();
+						DaoProduto daoProduto = new DaoProduto(conexao);
+						Produto produto = daoProduto.buscar(Integer.parseInt(codigoProduto));
+						
+						request.setAttribute("produtoDetalhe", produto);
+						
+						RequestDispatcher requestDispatcher = request.getRequestDispatcher ("detalheProduto.jsp"); 
+						requestDispatcher.forward(request, response); 
+						
+					} catch (SQLException e) {			
+						e.printStackTrace();
+					}
+		
 	}
 	
 	private String formatarNomeDoProduto(String nomeDoProduto){
@@ -104,7 +127,7 @@ public class ProdutoServlet extends HttpServlet {
 			for (Produto produto : produtos) {
 				out.println("<li>" +
 							"<div class='product'>" +
-								"<a href='#' class='info'>" +
+							"<a href='ProdutoServlet?codigoProduto="+produto.getId()+"&acao=MostrarDetalheProduto' class='info'>" +
 									"<span class='holder'>" +
 										"<img src='css/images/image01.jpg' alt='' />" +
 										"<span class='book-name'>"+formatarNomeDoProduto(produto.getNome())+"</span>" +
