@@ -16,26 +16,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>AdicionarProdutoServlet</display-name>
-    <servlet-name>AdicionarProdutoServlet</servlet-name>
-    <servlet-class>servlet.AdicionarProdutoServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdicionarProdutoServlet</servlet-name>
-    <url-pattern>/AdicionarProdutoServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AdicionarCategoriaServlet</display-name>
-    <servlet-name>AdicionarCategoriaServlet</servlet-name>
-    <servlet-class>servlet.AdicionarCategoriaServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdicionarCategoriaServlet</servlet-name>
-    <url-pattern>/AdicionarCategoriaServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>CategoriaServlet</display-name>
     <servlet-name>CategoriaServlet</servlet-name>
     <servlet-class>servlet.CategoriaServlet</servlet-class>
@@ -56,23 +36,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>AlterarProdutoServlet</display-name>
-    <servlet-name>AlterarProdutoServlet</servlet-name>
-    <servlet-class>servlet.AlterarProdutoServlet</servlet-class>
+    <display-name>CheckoutServlet</display-name>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <servlet-class>servlet.CheckoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AlterarProdutoServlet</servlet-name>
-    <url-pattern>/AlterarProdutoServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>PreencherFormulario</display-name>
-    <servlet-name>PreencherFormulario</servlet-name>
-    <servlet-class>servlet.PreencherFormulario</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PreencherFormulario</servlet-name>
-    <url-pattern>/PreencherFormulario</url-pattern>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <url-pattern>/CheckoutServlet</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>validacaoUsuario</filter-name>
@@ -82,21 +52,14 @@
     <filter-name>validacaoUsuario</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-       <filter-name>validacaoUsuario</filter-name>  
-       <filter-class>servlet.ValidacaoUsuario</filter-class>  
-   </filter>  
-   <filter-mapping>  
-       <filter-name>validacaoUsuario</filter-name>  
-	   <url-pattern>/*</url-pattern>  
-   </filter-mapping>
-    
-
-    <display-name>ExcluirProdutoServlet</display-name>
-    <servlet-name>ExcluirProdutoServlet</servlet-name>
-    <servlet-class>servlet.ExcluirProdutoServlet</servlet-class>
-    <display-name>CheckoutServlet</display-name>
-    <servlet-name>CheckoutServlet</servlet-name>
-    <servlet-class>servlet.CheckoutServlet</servlet-class>
-    <servlet-name>CheckoutServlet</servlet-name>
-    <url-pattern>/CheckoutServlet</url-pattern>
+  <servlet>
+    <description></description>
+    <display-name>Teste</display-name>
+    <servlet-name>Teste</servlet-name>
+    <servlet-class>servlet.Teste</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Teste</servlet-name>
+    <url-pattern>/Teste</url-pattern>
+  </servlet-mapping>
 </web-app>
