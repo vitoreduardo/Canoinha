@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,11 +10,11 @@ import dao.DaoCategoria;
 
 public class CategoriaController {
 	private DaoCategoria daoCategoria;
-	private Conexao conexao;
+	private Connection connection;
 	
 	public CategoriaController() throws SQLException {
-		this.conexao = new Conexao();
-		this.daoCategoria = new DaoCategoria(this.conexao);
+		this.connection = Conexao.getConexao();
+		this.daoCategoria = new DaoCategoria(this.connection);
 	}
 	
 	public void inserir(Categoria categoria) throws SQLException{

@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,8 +81,7 @@ public class CheckoutServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		List<ItemVenda> itensCarrinhoDeCompra = (List<ItemVenda>)session.getAttribute("carrinhoDeCompras");
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
-		
-		Conexao conexao = new Conexao();
+		DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getInstance();
 		
 		Venda venda = new Venda();
 		venda.setData(new Date());
@@ -93,7 +93,7 @@ public class CheckoutServlet extends HttpServlet {
 		venda.setItensVendas(itensCarrinhoDeCompra);			
 		venda.setUsuario(usuario);		
 		
-		DaoVenda daoVenda = new DaoVenda(conexao);
+		DaoVenda daoVenda = new DaoVenda(Conexao.getConexao());
 		daoVenda.inserir(venda);
 		
 		request.setAttribute("menssagemSucesso", "venda realizada com sucesso");
@@ -107,8 +107,7 @@ public class CheckoutServlet extends HttpServlet {
 			itensCarrinhoDeCompra = new ArrayList<ItemVenda>();
 		}
 		
-		Conexao conexao = new Conexao();
-		DaoProduto daoProduto = new DaoProduto(conexao);
+		DaoProduto daoProduto = new DaoProduto(Conexao.getConexao());
 		ItemVenda itemVenda = new ItemVenda();
 		itemVenda.setQuantidade(Integer.parseInt(request.getParameter("quantidade")));
 		itemVenda.setValor(Double.parseDouble(request.getParameter("precoDeVenda")));

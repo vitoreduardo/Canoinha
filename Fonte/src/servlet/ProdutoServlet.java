@@ -38,11 +38,9 @@ public class ProdutoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		String acao = request.getParameter("acao");
 		
-		Conexao conexao = new Conexao();
-		DaoProduto daoProduto = new DaoProduto(conexao);
 		try {
-			List<Produto> produtos = null;
-			produtos = (List<Produto>) daoProduto.buscar();
+			DaoProduto daoProduto = new DaoProduto(Conexao.getConexao());			
+			List<Produto> produtos = (List<Produto>) daoProduto.buscar();
 			request.setAttribute("produtos", produtos);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -52,9 +50,10 @@ public class ProdutoServlet extends HttpServlet {
 
 		if(acao.equals("Alterar")){
 			Produto produto = new Produto();
-			ProdutoController controller = new ProdutoController();
+			
 			Integer idProduto = Integer.parseInt(request.getParameter("id"));
 			try {
+				ProdutoController controller = new ProdutoController();
 				produto = controller.buscar(idProduto);
 				
 				request.setAttribute("produtos", produto);
@@ -65,9 +64,10 @@ public class ProdutoServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}else if( acao.equals("Excluir") ){
-			ProdutoController controller = new ProdutoController();
+			
 			Integer idProduto = Integer.parseInt(request.getParameter("id"));
 			try {
+				ProdutoController controller = new ProdutoController();
 				controller.excluir(idProduto);
 
 				response.sendRedirect("/Canoinha/admin/Produto/index.jsp?msg=Produto Excluido com Sucesso");
@@ -85,8 +85,7 @@ public class ProdutoServlet extends HttpServlet {
 		try {
 						String codigoProduto = request.getParameter("codigoProduto");
 			
-						Conexao conexao = new Conexao();
-						DaoProduto daoProduto = new DaoProduto(conexao);
+						DaoProduto daoProduto = new DaoProduto(Conexao.getConexao());
 						Produto produto = daoProduto.buscar(Integer.parseInt(codigoProduto));
 						
 						request.setAttribute("produtoDetalhe", produto);
@@ -120,8 +119,7 @@ public class ProdutoServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		try {
-			Conexao conexao = new Conexao();
-			DaoProduto daoProduto = new DaoProduto(conexao);
+			DaoProduto daoProduto = new DaoProduto(Conexao.getConexao());
 			List<Produto> produtos = daoProduto.buscar();
 			
 			for (Produto produto : produtos) {
@@ -182,8 +180,8 @@ public class ProdutoServlet extends HttpServlet {
 		cat.setId(idCategoria);
 		produto.setCategoria(cat);
 		
-		ProdutoController controller = new ProdutoController();
 		try {
+			ProdutoController controller = new ProdutoController();
 			controller.atualizar(produto);
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
@@ -222,9 +220,9 @@ public class ProdutoServlet extends HttpServlet {
 		Categoria cat = new Categoria();
 		cat.setId(idCategoria);
 		produto.setCategoria(cat);
-		
-		ProdutoController controller = new ProdutoController();
+				
 		try {
+			ProdutoController controller = new ProdutoController();
 			controller.inserir(produto);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

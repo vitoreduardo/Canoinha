@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import dao.DaoUsuario;
@@ -7,12 +8,12 @@ import model.Conexao;
 import model.Usuario;
 
 public class UsuarioController {
-	private Conexao conexao;
+	private Connection connection;
 	private DaoUsuario daoUsuario;
 	
 	public UsuarioController() throws SQLException {
-		this.conexao = new Conexao();
-		this.daoUsuario = new DaoUsuario(this.conexao);
+		this.connection = Conexao.getConexao();
+		this.daoUsuario = new DaoUsuario(this.connection);
 	}
 	
 	public void inserir(Usuario usuario) throws SQLException{

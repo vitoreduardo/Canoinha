@@ -29,18 +29,11 @@ public class ConexaoTest {
 	@Test
 	public void testGetConexaoDeveRetornarUmObjetoDeConexaoComOBancoDeDados() {
 		try {
-			Conexao conexao = new Conexao("jdbc:postgresql://localhost:5432/CanoinhaTestDB");
-			Connection connection = conexao.getConexao(); 
-			Assert.assertNotNull(conexao);
+			Connection connection = Conexao.getConexao("jdbc:postgresql://localhost:5432/CanoinhaTestDB"); 
+			Assert.assertNotNull(connection);
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
-	}
-	
-	
-	@Test
-	public void testName() throws Exception {
-		
-	}
+	}	
 
 }

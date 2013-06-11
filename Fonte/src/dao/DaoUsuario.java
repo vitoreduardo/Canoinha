@@ -2,6 +2,7 @@ package dao;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,14 +17,14 @@ import model.Endereco;
 import model.Produto;
 
 public class DaoUsuario extends Dao{
-	private Conexao conexao;
+	private Connection connection;
 	private Statement smtm;
 	private PreparedStatement pstm;
 	
-	public DaoUsuario(Conexao conexao) throws SQLException {
-		super(conexao);
-		this.conexao = conexao;
-		this.smtm = this.conexao.getConexao().createStatement();
+	public DaoUsuario(Connection connection) throws SQLException {
+		super(connection);
+		this.connection = connection;
+		this.smtm = this.connection.createStatement();
 	}
 	
 	public void inserir(Usuario usuario) throws SQLException{
@@ -32,7 +33,7 @@ public class DaoUsuario extends Dao{
 	                 "(id, nome, cpf, email, senha, data, "+
 	                 "rua, bairro, numero, cep, cidade, uf, tipo) "+
 	                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		pstm = conexao.getConexao().prepareStatement(sql);
+		pstm = connection.prepareStatement(sql);
 		pstm.setInt(1, usuario.getId());
 		pstm.setString(2, usuario.getNome());
 		pstm.setString(3, usuario.getCpf());

@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import model.Conexao;
@@ -9,11 +10,11 @@ import dao.DaoUsuario;
 
 public class LoginController {
 	private DaoUsuario daoUsuario;
-	private Conexao conexao;
+	private Connection connection;
 	
 	public LoginController() throws SQLException {
-		this.conexao = new Conexao();
-		this.daoUsuario = new DaoUsuario(conexao);
+		this.connection = Conexao.getConexao();
+		this.daoUsuario = new DaoUsuario(connection);
 	}
 	
 	public Usuario logar(String email, String senha) throws SQLException{

@@ -2,6 +2,7 @@ package dao;
 
 import static org.junit.Assert.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import junit.framework.Assert;
@@ -17,7 +18,7 @@ import dao.DaoCategoria;
 
 
 public class DaoCategoriaTest {
-	private Conexao conexao;
+	private Connection conexao;
 	private DaoCategoria daoCategoria;
 
 	private Categoria categoriaPadrao(){
@@ -28,7 +29,7 @@ public class DaoCategoriaTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.conexao = new Conexao("jdbc:postgresql://localhost:5432/CanoinhaTestDB");
+		this.conexao = Conexao.getConexao("jdbc:postgresql://localhost:5432/CanoinhaTestDB");
 		this.daoCategoria = new DaoCategoria(this.conexao);
 	}
 

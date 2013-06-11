@@ -126,9 +126,8 @@ public class CategoriaServlet extends HttpServlet {
 	
 	private void retornarMenuDeCategorias(HttpServletRequest request,
 	HttpServletResponse response) throws IOException{
-		Conexao conexao = new Conexao();
  		try {
- 			DaoCategoria daoCategoria = new DaoCategoria(conexao);
+ 			DaoCategoria daoCategoria = new DaoCategoria(Conexao.getConexao());
  			List<Categoria> categorias = daoCategoria.buscar();
  			response.setContentType("text/html");
  			PrintWriter out = response.getWriter();
@@ -147,14 +146,11 @@ public class CategoriaServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		
 		Categoria categoria = new Categoria();
-		categoria.setNome(nome);
-		
-		Conexao conn = null;
-		conn = new Conexao();
+		categoria.setNome(nome);		
 		
 		DaoCategoria daoCategoria = null;
 		try {
-			daoCategoria = new DaoCategoria( conn );
+			daoCategoria = new DaoCategoria(Conexao.getConexao());
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();

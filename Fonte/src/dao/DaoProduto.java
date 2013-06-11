@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,19 +13,19 @@ import model.Conexao;
 import model.Produto;
 
 public class DaoProduto extends Dao {
-	private Conexao conexao;
+	private Connection connection;
 	private Statement smtm;
 	private PreparedStatement pstm;
 	private DaoCaracteristicasProduto daoCaracteristicasProduto; 
 	private DaoCategoria daoCategoria;
 	
-	public DaoProduto(Conexao conexao) {
-		super(conexao);
+	public DaoProduto(Connection connection) {
+		super(connection);
 		try {
-			this.conexao = conexao;
-			this.smtm = this.conexao.getConexao().createStatement();
-			this.daoCaracteristicasProduto = new DaoCaracteristicasProduto(this.conexao);
-			this.daoCategoria = new DaoCategoria(this.conexao);
+			this.connection = connection;
+			this.smtm = this.connection.createStatement();
+			this.daoCaracteristicasProduto = new DaoCaracteristicasProduto(this.connection);
+			this.daoCategoria = new DaoCategoria(this.connection);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -38,7 +39,7 @@ public class DaoProduto extends Dao {
 	                 "informacoes, quantidadeDisponivel, foto, categorias_id) "+
 	                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		pstm = conexao.getConexao().prepareStatement(sql);
+		pstm = connection.prepareStatement(sql);
 		pstm.setInt(1, produto.getId());
 		pstm.setString(2, produto.getNome());
 		pstm.setDouble(3, produto.getPrecoDeCompra());

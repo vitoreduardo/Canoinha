@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,15 +11,15 @@ import model.Conexao;
 import model.ItemVenda;
 
 public class DaoItemVenda extends Dao{
-	private Conexao conexao;
+	private Connection connection;
 	private Statement smtm;
 	private DaoProduto daoProduto;
 	
-	public DaoItemVenda(Conexao conexao) throws SQLException {
-		super(conexao);
-		this.conexao = conexao;
-		this.smtm = this.conexao.getConexao().createStatement();
-		this.daoProduto = new DaoProduto(conexao);		
+	public DaoItemVenda(Connection connection) throws SQLException {
+		super(connection);
+		this.connection = connection;
+		this.smtm = this.connection.createStatement();
+		this.daoProduto = new DaoProduto(connection);		
 	}
 	
 	public void inserir(int idVenda, ItemVenda itemVenda) throws SQLException{

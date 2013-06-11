@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,13 +10,13 @@ import java.util.Date;
 import model.Conexao;
 
 public class Dao {
-	private Conexao conexao;
+	private Connection connection;
 	private Statement smtm;
 	
-	public Dao(Conexao conexao) {
-		this.conexao = conexao;
+	public Dao(Connection conexao) {
+		this.connection = conexao;
 		try {
-			this.smtm = conexao.getConexao().createStatement();
+			this.smtm = conexao.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

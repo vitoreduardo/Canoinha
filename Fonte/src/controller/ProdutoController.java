@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +10,12 @@ import model.Produto;
 import dao.DaoProduto;
 
 public class ProdutoController {
-	private Conexao conexao;
+	private Connection connection;
 	private DaoProduto daoProduto;
 	
-	public ProdutoController() {
-		this.conexao = new Conexao();
-		this.daoProduto = new DaoProduto(this.conexao);
+	public ProdutoController() throws SQLException {
+		this.connection = Conexao.getConexao();
+		this.daoProduto = new DaoProduto(this.connection);
 	}
 	
 	public void inserir(Produto produto) throws SQLException{

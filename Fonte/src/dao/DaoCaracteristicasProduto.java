@@ -1,5 +1,7 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,14 +13,14 @@ import model.Conexao;
 import model.Produto;
 
 public class DaoCaracteristicasProduto extends Dao{
-	private Conexao conexao;
+	private Connection connection;
 	private Statement smtm;
 	
-	public DaoCaracteristicasProduto(Conexao conexao) {
-		super(conexao);
+	public DaoCaracteristicasProduto(Connection connection) {
+		super(connection);
 		try {
-			this.conexao = conexao;
-			this.smtm = this.conexao.getConexao().createStatement();
+			this.connection = connection;
+			this.smtm = this.connection.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

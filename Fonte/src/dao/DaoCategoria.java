@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,14 +15,14 @@ import model.TipoUsuario;
 import model.Usuario;
 
 public class DaoCategoria extends Dao{
-	private Conexao conexao;
+	private Connection connection;
 	private Statement smtm;
 	private PreparedStatement pstm;
 	
-	public DaoCategoria(Conexao conexao) throws SQLException {
-		super(conexao);
-		this.conexao = conexao;
-		this.smtm = this.conexao.getConexao().createStatement();
+	public DaoCategoria(Connection connection) throws SQLException {
+		super(connection);
+		this.connection = connection;
+		this.smtm = this.connection.createStatement();
 	}
 	
 	public void inserir(Categoria categoria) throws SQLException{
@@ -31,7 +32,7 @@ public class DaoCategoria extends Dao{
 	                 "(id, nome) "+
 	                 "VALUES (?, ?)";
 		
-		pstm = conexao.getConexao().prepareStatement(sql);
+		pstm = connection.prepareStatement(sql);
 		pstm.setInt(1, categoria.getId());
 		pstm.setString(2, categoria.getNome());
 		pstm.execute();

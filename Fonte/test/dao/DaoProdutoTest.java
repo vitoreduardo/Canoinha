@@ -2,6 +2,7 @@ package dao;
 
 import static org.junit.Assert.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -19,11 +20,11 @@ import org.junit.Test;
 public class DaoProdutoTest {
 	private DaoProduto daoProduto;
 	private DaoCategoria daoCategoria;
-	private Conexao conexao;
+	private Connection conexao;
 	
 	@Before
 	public void setUp() throws Exception {
-		this.conexao = new Conexao("jdbc:postgresql://localhost:5432/CanoinhaTestDB");
+		this.conexao = Conexao.getConexao("jdbc:postgresql://localhost:5432/CanoinhaTestDB");
 		this.daoProduto = new DaoProduto(this.conexao);
 		this.daoCategoria = new DaoCategoria(this.conexao);
 	}
