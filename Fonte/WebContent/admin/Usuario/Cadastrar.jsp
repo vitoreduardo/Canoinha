@@ -3,7 +3,7 @@
       <form method="post" action="/Canoinha/UsuarioServlet">
 	     <fieldset>
 		    <legend>Cadastro Usuário</legend>
-				  <label for="nome">Nome:</label>
+			  <label for="nome">Nome:</label>
 			  <input id="nome" type="text" name="nome">
 			  <label for="rua">Rua:</label>
 			  <input id="rua" type="text" size="60" name="rua">
@@ -44,6 +44,7 @@
 			  <label for="dtnascimento">Data Nascimento: </label>
 			  <input id="dtnascimento" type="text" name="dtNascimento"><br>
 			  <input type="hidden" name="acao" value="CadastrarUsuario">
+			  <input type="hidden" name="tipoUsuario" value="Administrador">
 			  <input class="btn btn-primary" type="submit" value="Cadastrar">
 			  <input class="btn" type="reset" value="Limpar">
 		  </fieldset>

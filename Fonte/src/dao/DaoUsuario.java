@@ -30,21 +30,20 @@ public class DaoUsuario extends Dao{
 	public void inserir(Usuario usuario) throws SQLException{
 		usuario.setId(gerarSequencia("usuarios_id_seq"));
 		String sql = "INSERT INTO Usuarios "+
-	                 "(id, nome, cpf, email, senha, data, "+
+	                 "(id, nome, cpf, email, senha, dataNascimento, "+
 	                 "rua, bairro, numero, cep, cidade, uf, tipo) "+
 	                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		pstm = connection.prepareStatement(sql);
 		pstm.setInt(1, usuario.getId());
 		pstm.setString(2, usuario.getNome());
-		pstm.setString(3, usuario.getCpf());
+		pstm.setString(3, usuario.getCpf().replace(".", "").replace("-", "").replace("/", ""));
 		pstm.setString(4, usuario.getEmail());
 		pstm.setString(5, usuario.getSenha());
-		//pstm.setString(6, "22071996");
 		pstm.setDate(6, new java.sql.Date(usuario.getDataNascimento().getTime()));
 		pstm.setString(7, usuario.getEndereco().getRua());
 		pstm.setString(8, usuario.getEndereco().getBairro());
 		pstm.setString(9, usuario.getEndereco().getNumero());
-		pstm.setString(10, usuario.getEndereco().getCep());
+		pstm.setString(10, usuario.getEndereco().getCep().replaceAll(".", "").replaceAll("-", ""));
 		pstm.setString(11, usuario.getEndereco().getCidade());
 		pstm.setString(12, usuario.getEndereco().getUf());
 		pstm.setString(13, usuario.getTipo().name());

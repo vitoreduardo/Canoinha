@@ -2,7 +2,8 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>Canoinha</display-name>
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+      <welcome-file>dashboard.jsp</welcome-file>
+    <welcome-file>index.jsp</welcome-file>    
   </welcome-file-list>
   <servlet>
     <description></description>
@@ -33,6 +34,16 @@
   <servlet-mapping>
     <servlet-name>ProdutoServlet</servlet-name>
     <url-pattern>/ProdutoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UsuarioServlet</display-name>
+    <servlet-name>UsuarioServlet</servlet-name>
+    <servlet-class>servlet.UsuarioServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UsuarioServlet</servlet-name>
+    <url-pattern>/UsuarioServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

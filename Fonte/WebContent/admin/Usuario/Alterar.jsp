@@ -46,6 +46,7 @@
 			  <label for="dtnascimento">Data Nascimento: </label>
 			  <input id="dtnascimento" type="text" name="dtNascimento"><br>
 			  <input type="hidden" name="acao" value="AlterarUsuario">
+			  <input type='hidden' name='tipoUsuario' value='Administrador'>
 			  <input class="btn btn-primary" type="submit" value="Alterar" name="alterar">
 			  <input class="btn" type="reset" value="Limpar">
 		  </fieldset>

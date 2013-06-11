@@ -4,7 +4,7 @@
 		listarUsuarios();		
 	}
 	
-	function listarUsuarios() {
+	function listarUsuarios() {		
 		$.post('http://localhost:8080/Canoinha/UsuarioServlet',{acao:'ListarUsuarios'},
 				function(data) {
 					$('#lista_usuarios').html(data);
