@@ -22,8 +22,9 @@
 <div class="bs-docs-example span3" id="MenuPainelDeControle">
 	<ul class="nav nav-pills nav-stacked">
     	<li class="active"><a href="#">Menu</a></li>
-        <li><a href="#">Cadastro de Produtos</a></li>
-        <li><a href="#">Cadastro de Categorias</a></li>
+        <li><a href="Produto/index.jsp">Cadastro de Produtos</a></li>
+        <li><a href="Categoria/index.jsp">Cadastro de Categorias</a></li>
+        <li><a href="Usuario/index.jsp">Cadastro de Usuarios</a></li>
         <li><a href="logout.jsp">Logout</a></li>
     </ul>
 </div>

@@ -1,4 +1,16 @@
 <%@ include file="/WEB-INF/cabecalho.jsp"%>
+<script>
+	function carregarMetodosDeRequisicaoAssincrona(){
+		listarUsuarios();		
+	}
+	
+	function listarUsuarios() {
+		$.post('http://localhost:8080/Canoinha/UsuarioServlet',{acao:'ListarUsuarios'},
+				function(data) {
+					$('#lista_usuarios').html(data);
+				});
+	}
+</script>
 
 <c:if test="${not empty param.msg}">
 	<div class="alert alert-error">
@@ -17,25 +29,8 @@
 				<th>CPF</th>
 			</tr>
 		</thead>
-		<tbody>
-			<%
-			Conexao conn = null;
-			conn = new Conexao();
-
-			DaoUsuario dao = new DaoUsuario(conn);
-			List<Usuario> listUsuario = dao.buscar();
-			for (Usuario usuario : listUsuario) {
-			%>
-			<tr>
-				<td><%=usuario.getId()%></td>
-				<td><%=usuario.getNome()%></td>
-				<td><%=usuario.getCpf()%></td>
-				<td><a href=/Canoinha/UsuarioServlet?id=<%=usuario.getId()%>&acao=Alterar>Atualizar <i class="icon-edit"></i></a></td>
-				<td><a href=/Canoinha/UsuarioServlet?id=<%=usuario.getId()%>&acao=Excluir>Excluir <i class="icon-trash"></i></a></td>
-			</tr>
-			<%
-				}
-			%>
+		<tbody id="lista_usuarios">
+			
 		</tbody>
 		</form>
 	</table>

@@ -151,6 +151,30 @@ public class ProdutoServlet extends HttpServlet {
 			adicionarProdutos(request, response);
 		}else if (acao.equals("AlterarProduto")){
 			alterarProdutos(request, response);
+		}else if (acao.equals("ListarProdutos")){
+			listarProdutos(request, response);
+		}
+	}
+	
+	private void listarProdutos(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		try {
+			DaoProduto daoProduto = new DaoProduto(Conexao.getConexao());
+			List<Produto> produtos = daoProduto.buscar();
+			
+			for (Produto produto : produtos) {
+				out.println("<tr>"+
+						    "<td>"+produto.getId()+"</td>"+
+							"<td>"+produto.getNome()+"</td>"+
+							"<td>"+produto.getPrecoDeVenda()+"</td>"+
+							"<td><a href='/Canoinha/ProdutoServlet?id='"+produto.getId()+"'&acao='Alterar'>Atualizar <i class='icon-edit'></i></a></td>"+
+							"<td><a href='/Canoinha/ProdutoServlet?id='"+produto.getId()+"'&acao=Excluir'>Excluir <i class='icon-trash'></i></a></td>"+
+							"</tr>"
+							);											  
+			}
+		} catch (SQLException e) {			
+			e.printStackTrace();
 		}
 	}
 	

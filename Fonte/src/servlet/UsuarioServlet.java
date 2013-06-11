@@ -1,10 +1,12 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,12 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Categoria;
+import model.Conexao;
 import model.Endereco;
 import model.Produto;
 import model.TipoUsuario;
 import model.Usuario;
 import controller.ProdutoController;
 import controller.UsuarioController;
+import dao.DaoProduto;
+import dao.DaoUsuario;
 
 /**
  * Servlet implementation class UsuarioServlet
@@ -90,6 +95,30 @@ public class UsuarioServlet extends HttpServlet {
 			adicionarUsuario(request, response);
 		}else if(acao.equals("AlterarUsuario")){
 			alterarUsuario(request, response);
+		}else if(acao.equals("ListarUsuarios")){
+			listarUsuarios(request, response);
+		}
+	}
+	
+	private void listarUsuarios(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		try {
+			DaoUsuario daoUsuario = new DaoUsuario(Conexao.getConexao());
+			List<Usuario> usuarios = daoUsuario.buscar();
+			
+			for (Usuario usuario: usuarios) {
+				out.println("<tr>"+
+						       "<td>"+usuario.getId()+"</td>"+
+						       "<td>"+usuario.getNome()+"'</td>"+
+						       "<td>'"+usuario.getCpf()+"'</td>"+
+						       "<td><a href=/Canoinha/UsuarioServlet?id='"+usuario.getId()+"'&acao='Alterar'>Atualizar <i class='icon-edit'></i></a></td>"+
+						       "<td><a href=/Canoinha/UsuarioServlet?id='"+usuario.getId()+"'&acao='Excluir'>Excluir <i class='icon-trash'></i></a></td>"+
+						    "</tr>"
+							);											  
+			}
+		} catch (SQLException e) {			
+			e.printStackTrace();
 		}
 	}
 

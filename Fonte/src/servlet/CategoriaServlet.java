@@ -94,9 +94,32 @@ public class CategoriaServlet extends HttpServlet {
 			alterarCategoria(request, response);
 		}else if(acao.equals("RetornarMenudeCategorias")){
 			retornarMenuDeCategorias(request, response);
+		}else if(acao.equals("ListarCategorias")){
+			listarCategorias(request, response);
 		}
-
 	}
+	
+	private void listarCategorias(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		try {
+ 			DaoCategoria daoCategoria = new DaoCategoria(Conexao.getConexao());
+ 			List<Categoria> categorias = daoCategoria.buscar();
+ 			
+ 			for (Categoria categoria : categorias) {
+ 				out.println(
+ 							"<tr>"+
+ 						    "<td>"+categoria.getId()+"</td>"+
+ 						    "<td>"+categoria.getNome()+"</td>"+
+ 						    "<td><a href=/Canoinha/CategoriaServlet?id='"+categoria.getId()+"'&acao='Alterar'>Atualizar <i class='icon-edit'></i></a></td>"+
+ 					    	"<td><a href=/Canoinha/CategoriaServlet?id='"+categoria.getId()+"&acao='Excluir'>Excluir <i class='icon-trash'></i></a></td>"+
+ 					    	"</tr>"
+ 						   );				  
+ 			}
+ 		} catch (SQLException e) {			
+ 			e.printStackTrace();
+ 		}
+	} 
 
 	private void alterarCategoria(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -126,11 +149,11 @@ public class CategoriaServlet extends HttpServlet {
 	
 	private void retornarMenuDeCategorias(HttpServletRequest request,
 	HttpServletResponse response) throws IOException{
- 		try {
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		try {
  			DaoCategoria daoCategoria = new DaoCategoria(Conexao.getConexao());
  			List<Categoria> categorias = daoCategoria.buscar();
- 			response.setContentType("text/html");
- 			PrintWriter out = response.getWriter();
  			
  			for (Categoria categoria : categorias) {
  				out.println("<li><a href='#'>"+categoria.getNome()+"</a></li>");				  

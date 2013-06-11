@@ -22,6 +22,5 @@ controller.*"
  	$("#dtnascimento").mask("99/99/9999");
  });
 </script>
-
 </head>
-<body>
+<body  onload="carregarMetodosDeRequisicaoAssincrona()">
