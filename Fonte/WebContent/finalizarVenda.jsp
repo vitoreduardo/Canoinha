@@ -18,7 +18,7 @@
 			Bairro: <input class="input-medium" name="bairroCliente" type="text" readonly value="${usuario.getEndereco().getBairro()}"> 
 			Número: <input class="input-mini" name="numeroCliente" type="text" readonly value="${usuario.getEndereco().getNumero()}">
 			<hr>
-			Valor a Pagar: <input class="input-medium" name="valorTotal" type="text" value=<fmt:formatNumber value="<%=valorTotal%>" pattern="#,#00.00#"></fmt:formatNumber>  >
+			Valor a Pagar: <input class="input-medium" name="valorTotal" type="text" readonly value=<fmt:formatNumber value="<%=valorTotal%>" pattern="#,#00.00#"></fmt:formatNumber>  >
 			<hr>
 			<input type="radio" name="tipoDePagamento" value="visa"><img id="cartao" src="img/visa.jpeg"> 
 			<input type="radio" name="tipoDePagamento" value="master"><img id="cartao" src="img/master.jpeg"> 
