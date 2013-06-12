@@ -11,7 +11,7 @@
 				});
 	}
 </script>
-
+ 
 <c:if test="${not empty param.msg}">
 	<div class="alert alert-error">
 		${param.msg}

@@ -7,6 +7,7 @@
 			<label for="nome">Nome:</label> 
 			<input id="nome" type="text" name="nome"><br> 
 			<input class="btn btn-primary" type="submit" value="Cadastrar" name="cadastrar"> 
+			<input type="hidden" name="acao" value="CadastrarCategoria">
 			<input class="btn" type="reset" value="Limpar">
 		</fieldset>
 	</form>

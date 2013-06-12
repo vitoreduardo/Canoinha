@@ -8,7 +8,6 @@ controller.*"%>
 		  <form method="post" action="/Canoinha/ProdutoServlet" id="form_prepare">
 			 <fieldset>
 				<legend>Cadastro de Produtos</legend>
-				  Id:<br>
 				  <label>Nome:</label>
 				  <input id="nome" type="text" name="nome" placeholder="Nome..."><br>
 				  <label for="pcompra">Preço de compra: </label>
