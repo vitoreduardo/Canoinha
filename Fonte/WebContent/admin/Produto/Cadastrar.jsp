@@ -2,7 +2,7 @@
 dao.*,
 model.*,
 controller.*"%>
-<%@ include file="/WEB-INF/cabecalho.jsp"%>
+<%@ include file="/WEB-INF/admin/cabecalho.jsp"%>
 	<div class="container">
 	<div class="container-fluid">
 		  <form method="post" action="/Canoinha/ProdutoServlet" id="form_prepare">
@@ -49,4 +49,4 @@ controller.*"%>
 		  </form>
 		  </div>
 		  </div>
-<%@ include file="/WEB-INF/rodape.jsp"%>
+<%@ include file="/WEB-INF/admin/rodape.jsp"%>

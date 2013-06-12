@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/cabecalho.jsp"%>
+<%@ include file="/WEB-INF/admin/cabecalho.jsp"%>
 	<div class="container">
 	<div class="container-fluid">
 	<form class="form-horizontal" method="post" action="/Canoinha/CategoriaServlet" id="form_prepare">
@@ -13,4 +13,4 @@
 	</form>
 	</div>
 	</div>
-<%@ include file="/WEB-INF/rodape.jsp"%>
+<%@ include file="/WEB-INF/admin/rodape.jsp"%>

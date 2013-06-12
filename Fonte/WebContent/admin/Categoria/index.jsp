@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/cabecalho.jsp"%>
+<%@ include file="/WEB-INF/admin/cabecalho.jsp"%>
 <script>
 	function carregarMetodosDeRequisicaoAssincrona(){
 		listarCategorias();		
@@ -34,4 +34,4 @@
 		</form>
 	</table>
 	</div>
-<%@ include file="/WEB-INF/rodape.jsp"%>
+<%@ include file="/WEB-INF/admin/rodape.jsp"%>

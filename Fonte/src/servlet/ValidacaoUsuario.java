@@ -36,7 +36,7 @@ public class ValidacaoUsuario implements Filter{
            url.endsWith("_cabecalho.jsp")||url.endsWith("_menu.jsp")||url.endsWith("_rodape.jsp")||
            url.endsWith(".png") || url.endsWith(".gif")|| url.endsWith("logout.jsp")|| url.endsWith(".jpg")||url.endsWith(".jpeg")||
            url.endsWith("ProdutoServlet")||url.endsWith("CategoriaServlet")||url.endsWith("home.html")||
-           url.endsWith("CheckoutServlet")||url.endsWith("finalizarVenda.jsp")){
+           url.endsWith("CheckoutServlet")||url.endsWith("finalizarVenda.jsp")||url.endsWith("cadastroUsuario.jsp")){
         	valido = true;
         }
         

@@ -166,12 +166,12 @@ public class ProdutoServlet extends HttpServlet {
 						+ "<td>"
 						+ produto.getPrecoDeVenda()
 						+ "</td>"
-						+ "<td><a href='/Canoinha/ProdutoServlet?id='"
+						+ "<td><a href='/Canoinha/ProdutoServlet?id="
 						+ produto.getId()
-						+ "'&acao='Alterar'>Atualizar <i class='icon-edit'></i></a></td>"
-						+ "<td><a href='/Canoinha/ProdutoServlet?id='"
+						+ "&acao=Alterar'>Atualizar <i class='icon-edit'></i></a></td>"
+						+ "<td><a href='/Canoinha/ProdutoServlet?id="
 						+ produto.getId()
-						+ "'&acao=Excluir'>Excluir <i class='icon-trash'></i></a></td>"
+						+ "&acao=Excluir'>Excluir <i class='icon-trash'></i></a></td>"
 						+ "</tr>");
 			}
 		} catch (SQLException e) {

@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/cabecalho.jsp"%>
+<%@ include file="/WEB-INF/admin/cabecalho.jsp"%>
 	   <div class="container">
 		  <form method="post" action="/Canoinha/ProdutoServlet" id="form_prepare">
 			 <fieldset>
@@ -15,7 +15,7 @@
 				  <label for="foto">Foto:</label>
 				  <input id="foto" name=""> <br>
 				  Informações: <br>
-				  <textarea rows="10" cols="50" name="informacoes"></textarea><br>
+				  <textarea rows="10" cols="50" name="informacoes">${produtos.informacoes}</textarea><br>
 				  <label>Caracteristicas: </label>
 				  <input type="text" name="caracteristicas1" id="caracteristicas1">
 				  <input type="text" name="caracteristicas2" id="caracteristicas2">
@@ -44,4 +44,4 @@
 			  </fieldset>
 		  </form>
 		  </div>
-<%@ include file="/WEB-INF/rodape.jsp"%>l>
+<%@ include file="/WEB-INF/admin/rodape.jsp"%>

@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/cabecalho.jsp"%>
+<%@ include file="/WEB-INF/admin/cabecalho.jsp"%>
 	<div class="span10">
       <form method="post" action="/Canoinha/UsuarioServlet">
 	     <fieldset>
@@ -50,4 +50,4 @@
 		  </fieldset>
 	  </form>
 	</div>
-<%@ include file="/WEB-INF/rodape.jsp"%>
+<%@ include file="/WEB-INF/admin/rodape.jsp"%>

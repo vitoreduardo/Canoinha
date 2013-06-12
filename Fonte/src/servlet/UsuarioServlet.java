@@ -167,6 +167,13 @@ public class UsuarioServlet extends HttpServlet {
 			}		
 			UsuarioController controller = new UsuarioController();
 			controller.inserir(usuario);
+			
+			if (usuario.getTipo().equals("Administrador")){
+				response.sendRedirect("/Canoinha/admin/Usuario/index.jsp?msg=Usuario Cadastrado com Sucesso");
+			}else{
+				request.setAttribute("menssagemErro", "Usuario cadastrado com sucesso");
+				response.sendRedirect("/Canoinha/index.jsp");
+			}	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -174,13 +181,9 @@ public class UsuarioServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		response.sendRedirect("/Canoinha/admin/Usuario/index.jsp?msg=Usuario Cadastrado com Sucesso");
+		
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
 
@@ -191,10 +194,6 @@ public class UsuarioServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
