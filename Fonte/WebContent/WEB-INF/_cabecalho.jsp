@@ -59,8 +59,7 @@
 		<div class="cl">&nbsp;</div>
 		<!-- Login-details -->
 		<div id="login-details">
-			<p>
-			Bem vindo,  
+			<p>			
 			<c:choose>
 				<c:when test="${not empty usuario.nome}">
 					<a href="#myModal" data-toggle="modal">
@@ -69,7 +68,7 @@
 					<a href="admin/logout.jsp">Efetuar Logout(sair)</a>
 				</c:when>
 				<c:when test="${empty usuario.nome}">
-					Visitante
+					<a href="cadastroUsuario.jsp" >cadastre-se</a>					
 				</c:when>
 			</c:choose>			
 			</p><p><a href="#" class="cart" ><img src="css/images/cart-icon.png" alt="" /></a>

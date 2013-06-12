@@ -63,14 +63,4 @@
     <filter-name>validacaoUsuario</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <servlet>
-    <description></description>
-    <display-name>Teste</display-name>
-    <servlet-name>Teste</servlet-name>
-    <servlet-class>servlet.Teste</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Teste</servlet-name>
-    <url-pattern>/Teste</url-pattern>
-  </servlet-mapping>
 </web-app>
