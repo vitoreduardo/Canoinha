@@ -52,23 +52,25 @@ public class DaoUsuario extends Dao{
 	}
 	
 	public void atualizar(Usuario usuario) throws SQLException{
-		String sql = "UPDATE Usuarios SET "+
-				     "id="+usuario.getId()+", " +
-				     "nome="+aspasSimples(usuario.getNome())+", " +
-				     "cpf="+aspasSimples(usuario.getCpf())+", " +
-				     "email="+aspasSimples(usuario.getEmail())+", " +
-				     "senha="+aspasSimples(usuario.getSenha())+", " +
-				     "datanascimento="+aspasSimples("22071996")+", "+
-                     "rua="+aspasSimples(usuario.getEndereco().getRua())+", " +
-                     "bairro="+aspasSimples(usuario.getEndereco().getBairro())+", " +
-                     "numero="+aspasSimples(usuario.getEndereco().getNumero())+", " +
-                     "cep="+aspasSimples(usuario.getEndereco().getCep())+", " +
-                     "cidade="+aspasSimples(usuario.getEndereco().getCidade())+", " +
-                     "uf="+aspasSimples(usuario.getEndereco().getUf())+", " +
-                     "tipo="+aspasSimples(usuario.getTipo().toString())+" " +
-	                 "WHERE id="+usuario.getId();								
+		String sql = "UPDATE Usuarios SET id=?, nome=?, cpf=?, email=?, senha=?, datanascimento=?, rua=?,"+
+                     "bairro=?, numero=?, cep=?, cidade=?, uf=?, tipo=? "+
+	                 "WHERE id="+usuario.getId();	
 		
-		smtm.executeUpdate(sql);
+		pstm = connection.prepareStatement(sql);
+		pstm.setInt(1, usuario.getId());
+		pstm.setString(2, usuario.getNome());
+		pstm.setString(3, usuario.getCpf().replace(".", "").replace("-", "").replace("/", ""));
+		pstm.setString(4, usuario.getEmail());
+		pstm.setString(5, usuario.getSenha());
+		pstm.setDate(6, new java.sql.Date(usuario.getDataNascimento().getTime()));
+		pstm.setString(7, usuario.getEndereco().getRua());
+		pstm.setString(8, usuario.getEndereco().getBairro());
+		pstm.setString(9, usuario.getEndereco().getNumero());
+		pstm.setString(10, usuario.getEndereco().getCep().replaceAll(".", "").replaceAll("-", ""));
+		pstm.setString(11, usuario.getEndereco().getCidade());
+		pstm.setString(12, usuario.getEndereco().getUf());
+		pstm.setString(13, usuario.getTipo().name());
+		pstm.execute();
 	}
 	
 	public void excluir(int id) throws SQLException{
@@ -90,7 +92,7 @@ public class DaoUsuario extends Dao{
 				usuario.setCpf(rsUsuarios.getString("cpf"));
 				usuario.setEmail(rsUsuarios.getString("email"));
 				usuario.setSenha(rsUsuarios.getString("senha"));
-//				usuario.setDataNascimento(rsUsuarios.getDate("dataNascimento"));
+				usuario.setDataNascimento(rsUsuarios.getDate("dataNascimento"));
 				if (rsUsuarios.getString("tipo").equalsIgnoreCase("Administrador")){
 					usuario.setTipo(TipoUsuario.ADMINISTRADOR);
 				}

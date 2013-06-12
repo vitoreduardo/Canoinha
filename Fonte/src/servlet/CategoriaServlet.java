@@ -19,79 +19,55 @@ import model.Conexao;
 
 import dao.DaoCategoria;
 
-/**
- * Servlet implementation class CategoriaServlet
- */
 public class CategoriaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public CategoriaServlet() {
-		super();
-
+	private void alterarCategoriaGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		try
+		{
+			Categoria categoria = new Categoria();
+			CategoriaController controller = new CategoriaController();
+			categoria = controller.buscar(Integer.parseInt(request.getParameter("id")));
+		
+			request.setAttribute("categoria", categoria);
+			RequestDispatcher disp = request.getRequestDispatcher("/admin/Categoria/Alterar.jsp");
+			disp.forward(request, response);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}		
 	}
+	
+	private void excluirCategoria(HttpServletRequest request, HttpServletResponse response) throws IOException{	
+		try 
+		{
+			CategoriaController controller = new CategoriaController();
+			controller.excluir(Integer.parseInt(request.getParameter("id")));
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Integer idCategoria = Integer.parseInt(request.getParameter("id"));
+			response.sendRedirect("/Canoinha/admin/Categoria/index.jsp?msg=Categoria Excluido com Sucesso");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
 		
 		if(acao.equals("Alterar")){
-			Categoria categoria = new Categoria();
-			CategoriaController controller = null;
-			try {
-				controller = new CategoriaController();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			try {
-				categoria = controller.buscar(idCategoria);
-				
-				request.setAttribute("categoria", categoria);
-				RequestDispatcher disp = request.getRequestDispatcher("/admin/Categoria/Alterar.jsp");
-				disp.forward(request, response);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			alterarCategoriaGet(request, response);
 		}else if(acao.equals("Excluir")){
-			CategoriaController controller = null;
-			try {
-				controller = new CategoriaController();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			try {
-				controller.excluir(idCategoria);
-
-				response.sendRedirect("/Canoinha/admin/Categoria/index.jsp?msg=Categoria Excluido com Sucesso");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}    
+			excluirCategoria(request, response);    
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
 		
 		if (acao.equals("CadastrarCategoria")){
 			adicionarCategoria(request, response);
 		}else if(acao.equals("AlterarCategoria")){
-			alterarCategoria(request, response);
+			alterarCategoriaPost(request, response);
 		}else if(acao.equals("RetornarMenudeCategorias")){
 			retornarMenuDeCategorias(request, response);
 		}else if(acao.equals("ListarCategorias")){
@@ -111,8 +87,8 @@ public class CategoriaServlet extends HttpServlet {
  							"<tr>"+
  						    "<td>"+categoria.getId()+"</td>"+
  						    "<td>"+categoria.getNome()+"</td>"+
- 						    "<td><a href=/Canoinha/CategoriaServlet?id='"+categoria.getId()+"'&acao='Alterar'>Atualizar <i class='icon-edit'></i></a></td>"+
- 					    	"<td><a href=/Canoinha/CategoriaServlet?id='"+categoria.getId()+"&acao='Excluir'>Excluir <i class='icon-trash'></i></a></td>"+
+ 						    "<td><a href=/Canoinha/CategoriaServlet?id="+categoria.getId()+"&acao=Alterar>Atualizar <i class='icon-edit'></i></a></td>"+
+ 					    	"<td><a href=/Canoinha/CategoriaServlet?id="+categoria.getId()+"&acao=Excluir>Excluir <i class='icon-trash'></i></a></td>"+
  					    	"</tr>"
  						   );				  
  			}
@@ -121,29 +97,20 @@ public class CategoriaServlet extends HttpServlet {
  		}
 	} 
 
-	private void alterarCategoria(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		Integer id = Integer.parseInt(request.getParameter("id"));
-		String nome = request.getParameter("nome");
-		HttpSession session = request.getSession(true);
+	private void alterarCategoriaPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try
+		{
+			Categoria categoria  = new Categoria();
+			categoria.setId(Integer.parseInt(request.getParameter("id")));
+			categoria.setNome(request.getParameter("nome"));
 		
-		Categoria categoria  = new Categoria();
-		categoria.setId(id);
-		categoria.setNome(nome);
-		
-		CategoriaController controller = null;
-		try {
+			CategoriaController controller = null;
 			controller = new CategoriaController();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			controller.atualizar(categoria);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}		
 		response.sendRedirect("/Canoinha/admin/Categoria/index.jsp?msg=Categoria alterado com Sucesso");	
 	}
 	
@@ -163,28 +130,17 @@ public class CategoriaServlet extends HttpServlet {
  		}		
 	} 
 
-	private void adicionarCategoria(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		String nome = request.getParameter("nome");
-		HttpSession session = request.getSession(true);
-		
-		Categoria categoria = new Categoria();
-		categoria.setNome(nome);		
-		
-		DaoCategoria daoCategoria = null;
+	private void adicionarCategoria(HttpServletRequest request, HttpServletResponse response) throws IOException {						
 		try {
-			daoCategoria = new DaoCategoria(Conexao.getConexao());
-		} catch (SQLException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		try {
+			DaoCategoria daoCategoria = new DaoCategoria(Conexao.getConexao());
+			Categoria categoria = new Categoria();
+			categoria.setNome(request.getParameter("nome"));
 			daoCategoria.inserir(categoria);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
-		response.sendRedirect("/Canoinha/admin/indexCategoria.jsp?msg=Categoria Cadastrado com Sucesso");
+		response.sendRedirect("/Canoinha/admin/Categoria/index.jsp?msg=Categoria Cadastrado com Sucesso");
 	}
 }
