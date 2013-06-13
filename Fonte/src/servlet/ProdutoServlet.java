@@ -53,6 +53,25 @@ public class ProdutoServlet extends HttpServlet {
 			excluirProduto(request, response);
 		} else if (acao.equals("MostrarDetalheProduto")) {
 			mostrarDetalheProduto(request, response);
+		}else if (acao.equals("ProdutosPorCategoria")) {
+			produtosPorCategoria(request, response);
+		}
+	}
+	
+	private void produtosPorCategoria(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		try {
+			String idcategoria = request.getParameter("idCategoria");
+
+			DaoProduto daoProduto = new DaoProduto(Conexao.getConexao());
+			List<Produto> produtos = daoProduto.buscarPorCategoria(Integer.parseInt(idcategoria));
+
+			request.setAttribute("produtos", produtos);
+
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ProdutosPorCategoria.jsp");
+			requestDispatcher.forward(request, response);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	

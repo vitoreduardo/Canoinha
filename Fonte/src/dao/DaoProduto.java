@@ -31,6 +31,34 @@ public class DaoProduto extends Dao {
 		}
 	}	
 	
+	public List<Produto> buscarPorCategoria(int idCategoria) throws SQLException{
+		String sql = "Select * FROM Produtos where categorias_id=?";
+		pstm = connection.prepareStatement(sql);
+		pstm.setInt(1, idCategoria);
+		ResultSet rsProdutos = pstm.executeQuery();
+		
+		List<Produto> produtos = new ArrayList<Produto>();
+		if(rsProdutos != null){
+			while(rsProdutos.next()){
+				Produto produto = new Produto();
+				produto.setId(rsProdutos.getInt("id"));
+				produto.setNome(rsProdutos.getString("nome"));
+				produto.setPrecoDeCompra(rsProdutos.getDouble("precoDeCompra"));
+				produto.setPrecoDeVenda(rsProdutos.getDouble("precodeVenda"));
+				produto.setValorDesconto(rsProdutos.getDouble("valorDesconto"));
+				produto.setInformacoes(rsProdutos.getString("informacoes"));
+				produto.setQuantidadeDisponivel(rsProdutos.getInt("quantidadeDisponivel"));
+				produto.setFotos(rsProdutos.getString("foto"));				
+				produto.setCaracteristicas(this.daoCaracteristicasProduto.buscar(produto.getId()));
+				Categoria categoria = this.daoCategoria.buscar(idCategoria); 
+				produto.setCategoria(categoria);
+				produtos.add(produto);
+			}
+			rsProdutos.close();
+		}
+		return produtos;
+	}
+	
 	public void inserir(Produto produto) throws SQLException{
 		produto.setId(gerarSequencia("produtos_id_seq"));
 		

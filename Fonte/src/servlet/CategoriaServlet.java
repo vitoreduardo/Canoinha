@@ -123,7 +123,7 @@ public class CategoriaServlet extends HttpServlet {
  			List<Categoria> categorias = daoCategoria.buscar();
  			
  			for (Categoria categoria : categorias) {
- 				out.println("<li><a href='#'>"+categoria.getNome()+"</a></li>");				  
+ 				out.println("<li><a href='ProdutoServlet?acao=ProdutosPorCategoria&idCategoria="+categoria.getId()+"'>"+categoria.getNome()+"</a></li>");				  
  			}
  		} catch (SQLException e) {			
  			e.printStackTrace();
