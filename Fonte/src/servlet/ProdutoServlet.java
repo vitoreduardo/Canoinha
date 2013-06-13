@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import model.Categoria;
 import model.Conexao;
 import model.Produto;
+import controller.CategoriaController;
 import controller.ProdutoController;
 import dao.DaoProduto;
 
@@ -23,9 +24,14 @@ public class ProdutoServlet extends HttpServlet {
 	
 	private void alterarProdutoGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try {
-			ProdutoController controller = new ProdutoController();			
-			Produto produto = controller.buscar(Integer.parseInt(request.getParameter("id")));
+			ProdutoController produtoController = new ProdutoController();			
+			Produto produto = produtoController.buscar(Integer.parseInt(request.getParameter("id")));
 			request.setAttribute("produtos", produto);
+			
+			CategoriaController categoriaController = new CategoriaController();
+			List<Categoria> categorias = categoriaController.buscar();
+			request.setAttribute("categorias", categorias);
+			
 			RequestDispatcher disp = request.getRequestDispatcher("/admin/Produto/Alterar.jsp");
 			disp.forward(request, response);
 		} catch (SQLException e) {

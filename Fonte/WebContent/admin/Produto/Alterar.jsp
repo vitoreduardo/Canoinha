@@ -30,7 +30,7 @@
 				  
 				  <select name="categoria">
 				  	<c:forEach var="categoria" items="${categorias}">
-				  		<option value="${categoria.getId()}">"${categoria.getNome()}"</option>
+				  		<option value="${categoria.getId()}">${categoria.getNome()}</option>
 				  	</c:forEach>
 				  </select>
 				  <label for="quantidade">Quantidade Disponivel: </label>
