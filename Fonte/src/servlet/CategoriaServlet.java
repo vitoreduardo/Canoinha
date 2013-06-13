@@ -72,7 +72,26 @@ public class CategoriaServlet extends HttpServlet {
 			retornarMenuDeCategorias(request, response);
 		}else if(acao.equals("ListarCategorias")){
 			listarCategorias(request, response);
+		}else if(acao.equals("RetornarSelectDeCategorias")){
+			retornarSelectDeCategorias(request, response);
 		}
+	}
+	
+	private void retornarSelectDeCategorias(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		try {
+ 			DaoCategoria daoCategoria = new DaoCategoria(Conexao.getConexao());
+ 			List<Categoria> categorias = daoCategoria.buscar();
+ 			String select = "<select name='categoria' >"; 
+ 			for (Categoria categoria : categorias) {
+ 				select += "<option value="+categoria.getId()+">"+categoria.getNome()+"</td>"; 					 
+ 			} 			
+ 			out.println(select+"</select>");
+ 			
+ 		} catch (SQLException e) {			
+ 			e.printStackTrace();
+ 		}
 	}
 	
 	private void listarCategorias(HttpServletRequest request, HttpServletResponse response) throws IOException{

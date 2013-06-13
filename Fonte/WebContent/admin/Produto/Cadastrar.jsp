@@ -3,6 +3,18 @@ dao.*,
 model.*,
 controller.*"%>
 <%@ include file="/WEB-INF/admin/cabecalho.jsp"%>
+<script>
+	function carregarMetodosDeRequisicaoAssincrona(){
+		postSelectDeCategorias();		
+	}
+	
+	function postSelectDeCategorias() {
+		$.post('http://localhost:8080/Canoinha/CategoriaServlet',{acao:'RetornarSelectDeCategorias'},
+				function(data) {
+					$('#select_de_categorias').html(data);
+				});
+	}
+</script>
 	<div class="container">
 	<div class="container-fluid">
 		  <form method="post" action="/Canoinha/ProdutoServlet" id="form_prepare">
@@ -30,16 +42,9 @@ controller.*"%>
 						<tbody>
 						</tbody>
 					</table>
-				  <label for="categoria">Categoria</label>
-				  <%
-				     CategoriaController controllerCat = new CategoriaController();
-					 List<Categoria> listaCategoria = controllerCat.buscar();
-				  %>
-				  <select name="categoria">
-				   <% for (Categoria cat : listaCategoria) {%>						  
-						  	<option  value=<%=cat.getId()%>><%=cat.getNome()%></option>
-				   <%}%>	  
-				  </select>
+					<label for="categoria">Categoria</label>
+					<div id="select_de_categorias">					
+					</div>				  				  			
 				  <label for="quantidade">Quantidade Disponivel: </label>
 				  <input id="quantidade" type="text" name="quantidade_disponivel"><br>
 				  <input type="hidden" name="acao" value="AdicionarProduto">

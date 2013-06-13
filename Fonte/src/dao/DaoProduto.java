@@ -120,7 +120,7 @@ public class DaoProduto extends Dao {
 	
 	public Produto buscar(int id) throws SQLException{
 		String sql = "Select * FROM Produtos "+ 
-	                 "WHERE id="+id;										
+	                 "WHERE id="+id;
 		ResultSet rsProdutos = smtm.executeQuery(sql);
 		Produto produto = new Produto();
 		
@@ -143,7 +143,7 @@ public class DaoProduto extends Dao {
 	}
 	
 	public List<Produto> buscar() throws SQLException{
-		String sql = "Select * FROM Produtos ";
+		String sql = "Select * FROM Produtos order by id";
 		
 		ResultSet rsProdutos = smtm.executeQuery(sql);
 		
