@@ -75,14 +75,18 @@ public class DaoUsuario extends Dao{
 	
 	public void excluir(int id) throws SQLException{
 		String sql = "DELETE FROM Usuarios "+ 
-	                 "WHERE id="+id;										
-		smtm.executeUpdate(sql);				
+	                 "WHERE id=?";
+		pstm = connection.prepareStatement(sql);
+		pstm.setInt(1, id);
+		pstm.execute();				
 	}	
 	
 	public Usuario buscar(int id) throws SQLException{
 		String sql = "Select * FROM Usuarios "+ 
-	                 "WHERE id="+id;										
-		ResultSet rsUsuarios = smtm.executeQuery(sql);
+	                 "WHERE id=?";
+		pstm = connection.prepareStatement(sql);
+		pstm.setInt(1, id);
+		ResultSet rsUsuarios = pstm.executeQuery();
 		Usuario usuario = new Usuario();
 		
 		if(rsUsuarios != null){
@@ -115,9 +119,12 @@ public class DaoUsuario extends Dao{
 	
 	public Usuario buscar(String email, String senha) throws SQLException{
 		String sql = "Select * FROM Usuarios "+ 
-	                 "WHERE email="+aspasSimples(email)+" AND "+
-				     "      senha="+aspasSimples(senha);
-		ResultSet rsUsuarios = smtm.executeQuery(sql);
+	                 "WHERE email=? AND "+
+				     "      senha=?";
+		pstm = connection.prepareStatement(sql);
+		pstm.setString(1, email);
+		pstm.setString(2, senha);
+		ResultSet rsUsuarios = pstm.executeQuery();
 		Usuario usuario = null;
 		
 		if(rsUsuarios != null){

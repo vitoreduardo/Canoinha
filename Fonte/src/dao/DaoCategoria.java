@@ -39,26 +39,30 @@ public class DaoCategoria extends Dao{
 	}
 	
 	public void atualizar(Categoria categoria) throws SQLException{
-		String sql = "UPDATE categorias SET "+
-				     "id="+categoria.getId()+", " +
-				     "nome="+aspasSimples(categoria.getNome())+" " +
-				     "WHERE id="+categoria.getId();								
-		
-		smtm.executeUpdate(sql);
+		String sql = "UPDATE categorias SET nome=? "+				     
+				     "WHERE id=?";		
+		pstm = connection.prepareStatement(sql);		
+		pstm.setString(1, categoria.getNome());
+		pstm.setInt(2, categoria.getId());
+		pstm.execute();
 	}
 	
 	public void excluir(int id) throws SQLException{
 		String sql = "DELETE FROM categorias "+ 
-	                 "WHERE id="+id;										
-		smtm.executeUpdate(sql);				
+	                 "WHERE id=?";
+		pstm = connection.prepareStatement(sql);
+		pstm.setInt(1, id);
+		pstm.execute();
 	}
 	
 	public Categoria buscar(int id) throws SQLException{
 		String sql = "Select * FROM Categorias "+ 
-	                 "WHERE id="+id;										
-		ResultSet rsUsuarios = smtm.executeQuery(sql);
-		Categoria categoria = new Categoria();
+	                 "WHERE id=?";
+		pstm = connection.prepareStatement(sql);
+		pstm.setInt(1, id);
 		
+		ResultSet rsUsuarios = pstm.executeQuery();
+		Categoria categoria = new Categoria();		
 		if(rsUsuarios != null){
 			while(rsUsuarios.next()){				
 				categoria.setId(rsUsuarios.getInt("id"));

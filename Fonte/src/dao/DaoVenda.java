@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +18,7 @@ public class DaoVenda extends Dao{
 	private Connection connection;
 	private Statement smtm;
 	private DaoItemVenda daoItensVendas;
+	private PreparedStatement pstm;
 	
 	public DaoVenda(Connection connection) throws SQLException {
 		super(connection);
@@ -29,16 +32,18 @@ public class DaoVenda extends Dao{
 		
 		String sql = "INSERT INTO Vendas "+
 	                 "(id, dataHora, valor, valorFrete, tipoPagamento, quantidadeParcelas, Usuarios_id) "+
-	                 "VALUES ("+
-	                 venda.getId()+","+
-	                 aspasSimples(formatarData(venda.getData()))+","+
-               		 venda.getValor()+","+
-               		 venda.getValorFrete()+","+
-               		 aspasSimples(venda.getTipoPagamento())+","+
-               		 venda.getQuantidadeParcelas()+"," +
-					 venda.getUsuario().getId()+")" ;
+	                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 		
-		smtm.executeUpdate(sql);
+		pstm = connection.prepareStatement(sql);
+		pstm.setInt(1, venda.getId());
+		pstm.setDate(2, (Date)venda.getData());
+		pstm.setDouble(3, venda.getValor());
+		pstm.setDouble(4, venda.getValorFrete());
+		pstm.setString(5, venda.getTipoPagamento());
+		pstm.setInt(6, venda.getQuantidadeParcelas());
+		pstm.setInt(7, venda.getUsuario().getId());
+	                 
+		pstm.execute();
 		
 		for (ItemVenda itemVenda : venda.getItensVendas()) {
 			daoItensVendas.inserir(venda.getId(), itemVenda);
@@ -48,8 +53,11 @@ public class DaoVenda extends Dao{
 	
 	public Venda buscar(int id) throws SQLException{
 		String sql = "Select * FROM Vendas "+ 
-	                 "WHERE id="+id;										
-		ResultSet rsVenda = smtm.executeQuery(sql);
+	                 "WHERE id=?";
+		pstm = connection.prepareStatement(sql);
+		pstm.setInt(1, id);
+		
+		ResultSet rsVenda = pstm.executeQuery();
 		Venda venda = new Venda();
 		
 		if(rsVenda != null){
