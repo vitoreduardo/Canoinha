@@ -35,7 +35,8 @@ CREATE TABLE Usuarios (
   Cidade VARCHAR(50) NOT NULL,
   Uf VARCHAR(2) NOT NULL,
   Tipo VarChar(13),
-  PRIMARY KEY(Id)
+  PRIMARY KEY(Id),
+  UNIQUE(cpf)
 );
 
 
