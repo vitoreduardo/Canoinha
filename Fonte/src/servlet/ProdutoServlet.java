@@ -22,6 +22,34 @@ import dao.DaoProduto;
 public class ProdutoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String acao = request.getParameter("acao");
+
+		if (acao.equals("BuscarTodos")) {
+			buscarTodos(request, response);
+		} else if (acao.equals("AdicionarProduto")) {
+			adicionarProdutos(request, response);
+		} else if (acao.equals("AlterarProduto")) {
+			alterarProdutos(request, response);
+		} else if (acao.equals("ListarProdutos")) {
+			listarProdutos(request, response);
+		}
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String acao = request.getParameter("acao");
+
+		if (acao.equals("Alterar")) {
+			alterarProdutoGet(request, response);
+		} else if (acao.equals("Excluir")) {
+			excluirProduto(request, response);
+		} else if (acao.equals("MostrarDetalheProduto")) {
+			mostrarDetalheProduto(request, response);
+		}else if (acao.equals("ProdutosPorCategoria")) {
+			produtosPorCategoria(request, response);
+		}
+	}
+	
 	private void alterarProdutoGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try {
 			ProdutoController produtoController = new ProdutoController();			
@@ -39,29 +67,6 @@ public class ProdutoServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String acao = request.getParameter("acao");
-
-		/*try {
-			DaoProduto daoProduto = new DaoProduto(Conexao.getConexao());
-			List<Produto> produtos = (List<Produto>) daoProduto.buscar();
-			request.setAttribute("produtos", produtos);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-
-		if (acao.equals("Alterar")) {
-			alterarProdutoGet(request, response);
-		} else if (acao.equals("Excluir")) {
-			excluirProduto(request, response);
-		} else if (acao.equals("MostrarDetalheProduto")) {
-			mostrarDetalheProduto(request, response);
-		}else if (acao.equals("ProdutosPorCategoria")) {
-			produtosPorCategoria(request, response);
-		}
 	}
 	
 	private void produtosPorCategoria(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -156,20 +161,6 @@ public class ProdutoServlet extends HttpServlet {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String acao = request.getParameter("acao");
-
-		if (acao.equals("BuscarTodos")) {
-			buscarTodos(request, response);
-		} else if (acao.equals("AdicionarProduto")) {
-			adicionarProdutos(request, response);
-		} else if (acao.equals("AlterarProduto")) {
-			alterarProdutos(request, response);
-		} else if (acao.equals("ListarProdutos")) {
-			listarProdutos(request, response);
 		}
 	}
 

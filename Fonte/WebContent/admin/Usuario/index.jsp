@@ -12,12 +12,6 @@
 	}
 </script>
 
-<c:if test="${not empty param.msg}">
-	<div class="alert alert-error">
-		${param.msg}
-	</div>
-</c:if>
-
 	<div class="container">
     <form method="post" id="form_prepare">
 	<a href="Cadastrar.jsp">Novo Cadastro</a>

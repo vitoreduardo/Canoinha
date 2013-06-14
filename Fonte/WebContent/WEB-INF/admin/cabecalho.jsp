@@ -27,3 +27,15 @@ controller.*"
 </script>
 </head>
 <body  onload="carregarMetodosDeRequisicaoAssincrona()">
+
+<c:if test="${not empty menssagemSucesso}">
+	<div class="alert alert-success">
+		${param.msg}
+	</div>
+</c:if>
+
+<c:if test="${not empty menssagemErro}">
+	<div class="alert alert-error">
+		${param.msg}
+	</div>
+</c:if>

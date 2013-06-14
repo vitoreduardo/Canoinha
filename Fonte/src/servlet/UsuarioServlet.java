@@ -26,30 +26,39 @@ import controller.UsuarioController;
 import dao.DaoProduto;
 import dao.DaoUsuario;
 
-/**
- * Servlet implementation class UsuarioServlet
- */
 public class UsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public UsuarioServlet() {
-		super();
-		// TODO Auto-generated constructor stub
+	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+		String acao = request.getParameter("acao");
+
+		if (acao.equals("Alterar")) {
+			alterarUsuario(request, response);
+		} else if (acao.equals("Excluir")) {
+			excluirUsuario(request, response);
+		}
 	}
 
-	private void alterarUsuario(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String acao = request.getParameter("acao");
+
+		if (acao.equals("CadastrarUsuario")) {
+			adicionarUsuario(request, response);
+		} else if (acao.equals("AlterarUsuario")) {
+			alterarUsuarioPost(request, response);
+		} else if (acao.equals("ListarUsuarios")) {
+			listarUsuarios(request, response);
+		}
+	}
+	
+	private void alterarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			UsuarioController controller = new UsuarioController();
 			Integer idUsuario = Integer.parseInt(request.getParameter("id"));
 			Usuario usuario = controller.buscar(idUsuario);
 
 			request.setAttribute("usuarios", usuario);
-			RequestDispatcher disp = request
-					.getRequestDispatcher("/admin/Usuario/Alterar.jsp");
+			RequestDispatcher disp = request.getRequestDispatcher("admin/Usuario/Alterar.jsp");
 			disp.forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -57,21 +66,21 @@ public class UsuarioServlet extends HttpServlet {
 		}
 	}
 
-	private void excluirUsuario(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	private void excluirUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		try {
 			UsuarioController controller = new UsuarioController();
 			Integer idUsuario = Integer.parseInt(request.getParameter("id"));
 			controller.excluir(idUsuario);
 
-			response.sendRedirect("/Canoinha/admin/Usuario/index.jsp?msg=Usuario Excluido com Sucesso");
+			request.setAttribute("menssagemSucesso", "Usuario excluido com sucesso.");
+			RequestDispatcher disp = request.getRequestDispatcher("admin/Usuario/index.jsp");
+			disp.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void listarUsuarios(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	private void listarUsuarios(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		try {
@@ -102,8 +111,7 @@ public class UsuarioServlet extends HttpServlet {
 		}
 	}
 
-	private void alterarUsuarioPost(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	private void alterarUsuarioPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
 		try {
 			Usuario usuario = new Usuario();
@@ -112,8 +120,7 @@ public class UsuarioServlet extends HttpServlet {
 			usuario.setEmail(request.getParameter("email"));
 			usuario.setCpf(request.getParameter("cpf"));
 			usuario.setSenha(request.getParameter("senha"));
-			usuario.setDataNascimento(format.parse(request
-					.getParameter("dtNascimento")));
+			usuario.setDataNascimento(format.parse(request.getParameter("dtNascimento")));
 
 			Endereco endereco = new Endereco();
 			endereco.setRua(request.getParameter("rua"));
@@ -131,17 +138,20 @@ public class UsuarioServlet extends HttpServlet {
 
 			UsuarioController controller = new UsuarioController();
 			controller.atualizar(usuario);
+			
+			request.setAttribute("menssagemSucesso", "Usuario"+usuario.getNome()+" alterado com sucesso.");
+			RequestDispatcher disp = request.getRequestDispatcher("admin/Usuario/index.jsp");
+			disp.forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		response.sendRedirect("/Canoinha/admin/Usuario/index.jsp?msg=Usuario alterado com Sucesso");
+		}	
 	}
 
-	private void adicionarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void adicionarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			Date dtNascimento = format.parse(request.getParameter("dtNascimento"));
@@ -168,12 +178,14 @@ public class UsuarioServlet extends HttpServlet {
 			UsuarioController controller = new UsuarioController();
 			controller.inserir(usuario);
 			
-			if (usuario.getTipo().equals("Administrador")){
-				response.sendRedirect("/Canoinha/admin/Usuario/index.jsp?msg=Usuario Cadastrado com Sucesso");
+			request.setAttribute("menssagemSucesso", "Usuario"+usuario.getNome()+" cadastrado com sucesso.");
+			RequestDispatcher disp;
+			if(request.getParameter("tipoUsuario").equals("Administrador")){
+				disp = request.getRequestDispatcher("admin/Usuario/index.jsp");
 			}else{
-				request.setAttribute("menssagemErro", "Usuario cadastrado com sucesso");
-				response.sendRedirect("/Canoinha/index.jsp");
+				disp = request.getRequestDispatcher("index.jsp");
 			}	
+			disp.forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -182,27 +194,5 @@ public class UsuarioServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-	}
-
-	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		String acao = request.getParameter("acao");
-
-		if (acao.equals("Alterar")) {
-			alterarUsuario(request, response);
-		} else if (acao.equals("Excluir")) {
-			excluirUsuario(request, response);
-		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String acao = request.getParameter("acao");
-
-		if (acao.equals("CadastrarUsuario")) {
-			adicionarUsuario(request, response);
-		} else if (acao.equals("AlterarUsuario")) {
-			alterarUsuarioPost(request, response);
-		} else if (acao.equals("ListarUsuarios")) {
-			listarUsuarios(request, response);
-		}
 	}
 }

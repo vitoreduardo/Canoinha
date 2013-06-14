@@ -17,7 +17,7 @@ public class Conexao {
 		try {			
 			if(connection==null){				
 				Class.forName("org.postgresql.Driver" );
-				connection = DriverManager.getConnection(stringConnection,"postgres","master");				
+				connection = DriverManager.getConnection(stringConnection,"postgres","postgres");				
 			}
 			return connection;
 		} catch (ClassNotFoundException e) {
