@@ -36,7 +36,7 @@ public class DaoVenda extends Dao{
 		
 		pstm = connection.prepareStatement(sql);
 		pstm.setInt(1, venda.getId());
-		pstm.setDate(2, (Date)venda.getData());
+		pstm.setDate(2, new Date(0));
 		pstm.setDouble(3, venda.getValor());
 		pstm.setDouble(4, venda.getValorFrete());
 		pstm.setString(5, venda.getTipoPagamento());
